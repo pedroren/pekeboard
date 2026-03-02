@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "gen": "ergogen -d ."
+  },
+  "dependencies": {
+    "ergogen": "^4.2.1",
+    "openjscad": "^1.6.1"
+  }
+}

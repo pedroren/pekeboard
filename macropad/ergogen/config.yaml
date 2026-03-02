@@ -1,0 +1,317 @@
+meta:
+  name: pekepad
+  version: 0.0.1
+  engine: 4.1.0
+  author: pedroren
+units:
+  k: u
+  p: 1
+  px: 4
+  py: 2
+  kpx: k+px
+  kpy: k+py
+  mcuy: 43.18
+  mcux: 18.542
+  # Defaults to M2 Screws
+  screwSize: 1.5
+  standoffSize: 2.5
+points:
+  zones:
+    matrix:
+      anchor:
+        shift: [100, -120]
+      key:
+        padding: p+u
+        spread: p+u
+        tags: [switch]
+      columns:
+        outer:
+          key.column_net: P1
+          key.mirror.column_net: P21
+        middle:
+          key.column_net: P0
+          key.mirror.column_net: P20
+        inner:
+          key.column_net: P2
+          key.mirror.column_net: P19
+      rows:
+        bottom:
+          row_net: P4
+          mirror.row_net: P18
+        top:
+          row_net: P3
+          mirror.row_net: P15
+    encoders:
+      key:
+        padding: p+u
+        spread: p+u
+        tags: [encoder]
+      anchor:
+        ref.aggregate.parts: [matrix_outer_top,  matrix_outer_bottom]
+        shift: [-1.1k, 0]
+      columns:
+        enccol:
+          key.pin_a: P6
+          key.pin_c: P7
+          key.mirror.pin_a: P16
+          key.mirror.pin_c: P10
+          key.column_net: P1
+          key.mirror.column_net: P21
+      rows:
+        encrow:
+          row_net: P5
+          mirror.row_net: P14
+    mount1:
+      key.tags: [mount]
+      anchor:
+        ref.aggregate.parts: [matrix_outer_top,  matrix_outer_bottom, matrix_middle_top,  matrix_middle_bottom]
+    mount2:
+      key.tags: [mount]
+      anchor:
+        ref.aggregate.parts: [matrix_inner_top, matrix_inner_bottom]
+        shift: [.5k,0]
+    #mount3:
+    #  key.tags: [mount]
+    #  anchor:
+    #    ref.aggregate.parts: [mirror_matrix_middle_top, mirror_matrix_middle_bottom,mirror_matrix_outer_top, mirror_matrix_outer_bottom]
+    #mount4:
+    #  key.tags: [mount]
+    #  anchor:
+    #    ref.aggregate.parts: [mcu,encoders_encc1_encr2, encoders_encc1_encr1]
+  rotate: 0
+  mirror: &mirror
+    ref: matrix_inner_top
+    distance: 2.5k
+outlines:
+  raw:
+    - what: rectangle
+      where: [switch,encoder,mcu]
+      size: [k, k]
+  keys_socket:
+    - what: rectangle
+      where: [switch]
+      size: [14, 14]
+  keys:
+    - what: rectangle
+      where: [switch]
+      size: [k-0.5, k-0.5]
+    #- what: rectangle
+    #  where: tag.encoder
+    #  size: [k-0.5, k-0.5]
+  keys_area:
+    - what: rectangle
+      where: [switch]
+      size: [5+k, 5+k]
+      bound: true
+      corner: px
+  controller_area:
+    - what: polygon
+      fillet: 2
+      points:
+        - ref: matrix_inner_top
+          shift: [0, .5k+3]
+        - ref: mirror_matrix_inner_top
+          shift: [0, .5k+3]
+        - ref: mirror_matrix_inner_bottom
+          shift: [0, -.5k]
+        - ref: matrix_inner_bottom
+          shift: [0, -.5k]
+  encoder_area:
+    - what: rectangle
+      where: [encoder]
+      size: [5+k, 5+k]
+      corner: px
+  encoder_socket:
+    - what: circle
+      where: [encoder]
+      radius: 3
+  baseboard:
+    - what: polygon
+      operation: stack
+      fillet: 2
+      points:
+        - ref: matrix_outer_top
+          shift: [-0.5k, 0.5k]
+        - ref: matrix_middle_top
+          shift: [0, 0.5k]
+        - ref: matrix_inner_top
+          shift: [0, 0.5k]
+        - ref: mirror_matrix_inner_top
+          shift: [0, 0.5k]
+        - ref: mirror_matrix_middle_top
+          shift: [0, 0.5k]
+        - ref: mirror_matrix_outer_top
+          shift: [-0.5k, 0.5k]
+        - ref: mirror_encoders_enccol_encrow
+          shift: [-0.5k, 0.5k]
+        - ref: mirror_encoders_enccol_encrow
+          shift: [-0.5k, -0.5k]
+        - ref: mirror_matrix_outer_bottom
+          shift: [-0.5k, -0.5k]
+        - ref: mirror_matrix_inner_bottom
+          shift: [0, -0.5k]
+        - ref: matrix_inner_bottom
+          shift: [0, -0.5k]
+        - ref: matrix_outer_bottom
+          shift: [-0.5k, -0.5k]
+        - ref: encoders_enccol_encrow
+          shift: [-0.5k, -0.5k]
+        - ref: encoders_enccol_encrow
+          shift: [-0.5k, 0.5k]
+  mounting:
+    - what: circle
+      radius: screwSize
+      where: [mount]
+  standoff:
+    - what: circle
+      radius: standoffSize
+      where: [mount]
+  board:
+    - baseboard
+    - controller_area
+    - -mounting
+  plate:
+    - keys_area
+    - encoder_area
+    - controller_area
+    - -keys_socket
+    - -encoder_socket
+    - -mounting
+  bottom:
+    - what: outline
+      name: board
+      expand: 2
+      joints: beveled
+  preview:
+    - plate
+    - -raw
+    - -mounting
+pcbs:
+  switch_plate:
+    template: kicad8
+    outlines:
+      main:
+        outline: plate
+  pekepad:
+    template: kicad8
+    outlines:
+      main:
+        outline: board
+    footprints:
+      gnd_fillzone:
+        what: ceoloide/utility_filled_zone
+        where:
+          ref.aggregate.parts: [matrix_outer_top]
+      mx_hotswap:
+        what: ceoloide/switch_mx
+        where: [switch]
+        params:
+          include_keycap: true
+          reversible: false
+          hotswap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+      diode:
+        what: ceoloide/diode_tht_sod123
+        where: [switch]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [0, -5]
+          rotate: 180
+      diode_enc:
+        what: ceoloide/diode_tht_sod123
+        where: [encoder]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [0, 4]
+          rotate: 180
+      mcu:
+        what: ceoloide/mcu_nice_nano
+        where:
+          ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top]
+          shift: [0, -.25k]
+          rotate: -0
+        params:
+          reversible: false
+      encoders:
+        what: ceoloide/rotary_encoder_ec11_ec12
+        where: [encoder]
+        params:
+          A: "{{pin_a}}"
+          C: "{{pin_c}}"
+          S1: "{{colrow}}"
+          S2: "{{column_net}}"
+          mirror.S1: "{{column_net}}"
+          mirror.S2: "{{colrow}}"
+          include_plate_hole_marking: true
+          include_plated_mounting_holes: false
+        adjust:
+          rotate: 0
+      reset_button:
+        what: ceoloide/reset_switch_smd_side
+        params:
+          side: B
+        where:
+          ref.aggregate.parts: [matrix_inner_top]
+          shift: [.5k,.5k+1]
+          rotate: 0
+      power_switch:
+        what: ceoloide/power_switch_smd_side
+        params:
+          side: B
+        where:
+          ref.aggregate.parts: [mirror_matrix_inner_top]
+          shift: [-.5k,.5k+1]
+          rotate: 90
+      batt_connector:
+        what: ceoloide/battery_connector_jst_ph_2
+        params:
+          side: B
+        where:
+          ref.aggregate.parts: [mirror_matrix_inner_top]
+          shift: [-0.5k-1, 5]
+          rotate: 0
+      mounting_holes:
+          what: ceoloide/mounting_hole_npth
+          where: [mount]
+      oled:
+        what: ceoloide/display_ssd1306
+        params:
+          side: "F"
+          SDA: P8
+          SCL: P9
+        where:
+          ref.aggregate.parts: [matrix_inner_bottom, mirror_matrix_inner_bottom,matrix_inner_top,mirror_matrix_inner_top]
+          shift: [0,2]
+          rotate: 0
+cases:
+  switch_plate:
+    - name: plate
+      extrude: 1
+  _bottom:
+    - name: bottom
+      extrude: 1
+  _outer_block:
+    - name: bottom
+      extrude: 5.6
+  _inner_block:
+    - name: baseboard
+      extrude: 5.6
+  _wall:
+    - _outer_block
+    - -_inner_block
+  _holes:
+    - name: mounting
+      extrude: 4
+  _standoffs:
+    - name: standoff
+      extrude: 4
+  case:
+    - _wall
+    - _bottom
+    - _standoffs
+    - -_holes
