@@ -1,0 +1,11 @@
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+runner = "probe-rs run --chip nRF52840_xxAA"
+linker = "flip-link"
+
+[build]
+target = "thumbv7em-none-eabihf"
+
+[env]
+DEFMT_LOG = "info"
+KEYBOARD_TOML_PATH =  { value = "keyboard.toml", relative = true }
+BINDGEN_EXTRA_CLANG_ARGS_thumbv7em_none_eabihf = "--sysroot=/usr/arm-none-eabi -I/usr/lib/gcc/arm-none-eabi/15.2.0/include"
