@@ -52,9 +52,9 @@ points:
       columns:
         enccol:
           key.pin_a: P6
-          key.pin_c: P7
-          key.mirror.pin_a: P16
-          key.mirror.pin_c: P10
+          key.pin_c: P8
+          key.mirror.pin_a: P10
+          key.mirror.pin_c: P9
           key.column_net: P1
           key.mirror.column_net: P21
       rows:
@@ -81,7 +81,7 @@ points:
   rotate: 0
   mirror: &mirror
     ref: matrix_inner_top
-    distance: 2.5k
+    distance: 2.8k
 outlines:
   raw:
     - what: rectangle
@@ -257,7 +257,7 @@ pcbs:
           side: B
         where:
           ref.aggregate.parts: [matrix_inner_top]
-          shift: [.5k,.5k+1]
+          shift: [.7k,.5k+1]
           rotate: 0
       power_switch:
         what: ceoloide/power_switch_smd_side
@@ -265,7 +265,7 @@ pcbs:
           side: B
         where:
           ref.aggregate.parts: [mirror_matrix_inner_top]
-          shift: [-.5k,.5k+1]
+          shift: [-.7k,.5k+1]
           rotate: 90
       batt_connector:
         what: ceoloide/battery_connector_jst_ph_2
@@ -273,7 +273,7 @@ pcbs:
           side: B
         where:
           ref.aggregate.parts: [mirror_matrix_inner_top]
-          shift: [-0.5k-1, 5]
+          shift: [-0.7k, 3]
           rotate: 0
       mounting_holes:
           what: ceoloide/mounting_hole_npth
@@ -282,8 +282,8 @@ pcbs:
         what: ceoloide/display_ssd1306
         params:
           side: "F"
-          SDA: P8
-          SCL: P9
+          SDA: P7
+          SCL: P16
         where:
           ref.aggregate.parts: [matrix_inner_bottom, mirror_matrix_inner_bottom,matrix_inner_top,mirror_matrix_inner_top]
           shift: [0,2]
