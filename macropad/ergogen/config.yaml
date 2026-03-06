@@ -26,21 +26,21 @@ points:
         tags: [switch]
       columns:
         outer:
-          key.column_net: P1
+          key.column_net: P0
           key.mirror.column_net: P21
         middle:
-          key.column_net: P0
+          key.column_net: P2
           key.mirror.column_net: P20
         inner:
-          key.column_net: P2
+          key.column_net: P3
           key.mirror.column_net: P19
       rows:
         bottom:
+          row_net: P6
+          mirror.row_net: P15
+        top:
           row_net: P4
           mirror.row_net: P18
-        top:
-          row_net: P3
-          mirror.row_net: P15
     encoders:
       key:
         padding: p+u
@@ -51,16 +51,16 @@ points:
         shift: [-1.1k, 0]
       columns:
         enccol:
-          key.pin_a: P6
-          key.pin_c: P8
-          key.mirror.pin_a: P10
-          key.mirror.pin_c: P9
-          key.column_net: P1
+          key.pin_a: P8
+          key.pin_c: P9
+          key.mirror.pin_a: P14
+          key.mirror.pin_c: P10
+          key.column_net: P0
           key.mirror.column_net: P21
       rows:
         encrow:
           row_net: P5
-          mirror.row_net: P14
+          mirror.row_net: P5
     mount1:
       key.tags: [mount]
       anchor:
@@ -217,6 +217,7 @@ pcbs:
         params:
           from: "{{colrow}}"
           to: "{{row_net}}"
+          diode_3dmodel_filename: '${KIPRJMOD}/../../../kicad/D_SOD-123.step'
         adjust:
           shift: [0, -5]
           rotate: 180
@@ -226,6 +227,8 @@ pcbs:
         params:
           from: "{{colrow}}"
           to: "{{row_net}}"
+          diode_3dmodel_filename: '${KIPRJMOD}/../../../kicad/D_SOD-123.step'
+          diode_3dmodel_xyz_rotation: [0,0,0]
         adjust:
           shift: [0, 4]
           rotate: 180
@@ -254,7 +257,9 @@ pcbs:
       reset_button:
         what: ceoloide/reset_switch_smd_side
         params:
-          side: B
+          side: B 
+          reset_switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/Panasonic_EVQPUJ_EVQPUA.step'
+          reset_switch_3dmodel_xyz_rotation: [0,0,0]
         where:
           ref.aggregate.parts: [matrix_inner_top]
           shift: [.7k,.5k+1]
@@ -263,6 +268,8 @@ pcbs:
         what: ceoloide/power_switch_smd_side
         params:
           side: B
+          switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/SW_SPDT_PCM12.step'
+          switch_3dmodel_xyz_rotation: [0,0,90]
         where:
           ref.aggregate.parts: [mirror_matrix_inner_top]
           shift: [-.7k,.5k+1]
@@ -271,6 +278,9 @@ pcbs:
         what: ceoloide/battery_connector_jst_ph_2
         params:
           side: B
+          battery_connector_3dmodel_filename: '${KIPRJMOD}/../../../kicad/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
+          battery_connector_3dmodel_xyz_rotation: [0,0,180]
+          battery_connector_3dmodel_xyz_offset: [1, 0, 0]
         where:
           ref.aggregate.parts: [mirror_matrix_inner_top]
           shift: [-0.7k, 3]
@@ -279,11 +289,12 @@ pcbs:
           what: ceoloide/mounting_hole_npth
           where: [mount]
       oled:
-        what: ceoloide/display_ssd1306
+        what: ceoloide/display_nice_view
         params:
           side: "F"
-          SDA: P7
-          SCL: P16
+          MOSI: P7
+          SCK: P16
+          CS: P1
         where:
           ref.aggregate.parts: [matrix_inner_bottom, mirror_matrix_inner_bottom,matrix_inner_top,mirror_matrix_inner_top]
           shift: [0,2]
