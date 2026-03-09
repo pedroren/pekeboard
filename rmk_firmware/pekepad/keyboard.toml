@@ -6,6 +6,13 @@ product_id = 0x4643
 manufacturer = "RMK"
 chip = "nrf52840"
 
+# Storage configuration.
+[storage]
+# Clear storage at keyboard boot.
+# Set it to true will reset the storage(including keymap, BLE bond info, etc.) at each reboot.
+# This option is useful when testing the firmware.
+clear_storage = true
+
 [behavior.morse]
 # default profile for morse, tap dance and tap-hold keys:
 enable_flow_tap = true
@@ -18,6 +25,7 @@ gap_timeout = "250ms"
 morses = [
   # td(0): Function key that outputs F1 on tap, Escape on double tap, layer 1 on hold
   { tap = "F1", double_tap = "Escape", hold = "MO(1)" },
+  # td(1): Function key that outputs F12 on tap, Escape on double tap, layer 1 on hold
   { tap = "F12", double_tap = "Escape", hold = "MO(1)" },
 ]
 
@@ -26,53 +34,61 @@ morses = [
 FH = { hold_on_other_press = true, unilateral_tap = false, hold_timeout = "200ms", gap_timeout = "200ms" }
 
 [matrix]
+# Default: normal matrix with diodes
+matrix_type = "normal"  # This is the default, can be omitted
+
 # Row and col pins are mandatory
-row_pins = ["P0_20", "P0_22", "P0_24", "P1_15", "P1_13", "P1_11"]
-col_pins = ["P0_06", "P0_08", "P0_17", "P0_31", "P0_29", "P0_02"]
+row_pins = ["P0_22", "P1_00", "P0_24", "P1_15", "P1_13"]
+col_pins = ["P0_08", "P0_17", "P0_20", "P0_31", "P0_29", "P0_02"]
 # RMK uses col2row as the default matrix diode direction, if you want to use a row2col matrix, add `row2col = true`
-# row2col = true
+row2col = false
 
 # Encoder 0
 [[input_device.encoder]]
-pin_a = "P1_00"
-pin_b = "P0_11"
-phase = "default"
+pin_a = "P1_04"
+pin_b = "P1_06"
+internal_pullup = true
+phase = "resolution"
+resolution = 1
+
 # Encoder 1
 [[input_device.encoder]]
-pin_a = "P0_10"
+pin_a = "P1_11"
 pin_b = "P0_09"
-phase = "default"
+internal_pullup = true
+phase = "resolution"
+resolution = 1
 
 
 [layout]
-rows = 6
+rows = 5
 cols = 6
 layers = 2
 matrix_map = """
 (0,0) (0,1) (0,2)   (3,3) (3,4) (3,5)
 (1,0) (1,1) (1,2)   (4,3) (4,4) (4,5)
-(2,0)                           (5,5)
+(2,0)                           (2,5)
 """
 
 # layer 0 (default):
 [[layer]]
 name = "base_layer" #optional name for the layer
 keys = """
-        TD(1) Kc2 Kc3   Kc4 Kc5 Kc6
-        Kc7 Kc8 Kc9     Kc0 F11 TD(1)
-        AudioMute       MediaPlayPause
+        TD(0) Kc2 Kc3   Kc4 Kc5 Kc6
+        F4 F5 F6     Kc0 F11 TD(1)
+        MediaPlayPause  AudioMute
 """
-encoders = [["AudioVolUp", "AudioVolDown"], ["PageDown", "PageUp"]]
+encoders = [["PageDown", "PageUp"], ["AudioVolUp", "AudioVolDown"]]
 
 # layer 1:
 [[layer]]
 name = "extra_later" #optional 
 keys = """
     BrightnessDown BrightnessUp Kc3   Kc4 Kc5 Kc6
-    Kc7 Kc8 Kc9   Kc0 F11 F12
-    AudioMute  MediaStop
+    Kc7 Kc8 Kc9     Kc0 F11 F12
+    MediaStop       AudioMute
 """
-encoders = [["AudioVolUp", "AudioVolDown"], ["PageDown", "PageUp"]]
+encoders = [["PageDown", "PageUp"], ["AudioVolUp", "AudioVolDown"]]
 
 
 [ble]

@@ -26,21 +26,21 @@ points:
         tags: [switch]
       columns:
         outer:
-          key.column_net: P0
-          key.mirror.column_net: P21
+          key.column_net: P008
+          key.mirror.column_net: P031
         middle:
-          key.column_net: P2
-          key.mirror.column_net: P20
+          key.column_net: P017
+          key.mirror.column_net: P029
         inner:
-          key.column_net: P3
-          key.mirror.column_net: P19
+          key.column_net: P020
+          key.mirror.column_net: P002
       rows:
         bottom:
-          row_net: P6
-          mirror.row_net: P15
+          row_net: P100
+          mirror.row_net: P113
         top:
-          row_net: P4
-          mirror.row_net: P18
+          row_net: P022
+          mirror.row_net: P115
     encoders:
       key:
         padding: p+u
@@ -51,16 +51,16 @@ points:
         shift: [-1.1k, 0]
       columns:
         enccol:
-          key.pin_a: P8
-          key.pin_c: P9
-          key.mirror.pin_a: P14
-          key.mirror.pin_c: P10
-          key.column_net: P0
-          key.mirror.column_net: P21
+          key.pin_a: P104
+          key.pin_c: P106
+          key.mirror.pin_a: P111
+          key.mirror.pin_c: P009
+          key.column_net: P008
+          key.mirror.column_net: P031
       rows:
         encrow:
-          row_net: P5
-          mirror.row_net: P5
+          row_net: P024
+          mirror.row_net: P024
     mount1:
       key.tags: [mount]
       anchor:
@@ -124,7 +124,7 @@ outlines:
   encoder_socket:
     - what: circle
       where: [encoder]
-      radius: 3
+      radius: 3.5
   baseboard:
     - what: polygon
       operation: stack
@@ -240,6 +240,24 @@ pcbs:
           rotate: -0
         params:
           reversible: false
+          P21: P031
+          P20: P029
+          P19: P002
+          P18: P115
+          P15: P113
+          P14: P111
+          P16: P010
+          P10: P009
+          P1: P006
+          P0: P008
+          P2: P017
+          P3: P020
+          P4: P022
+          P5: P024
+          P6: P100
+          P7: P011
+          P8: P104
+          P9: P106
       encoders:
         what: ceoloide/rotary_encoder_ec11_ec12
         where: [encoder]
@@ -292,9 +310,9 @@ pcbs:
         what: ceoloide/display_nice_view
         params:
           side: "F"
-          MOSI: P7
-          SCK: P16
-          CS: P1
+          MOSI: P011
+          SCK: P010
+          CS: P006
         where:
           ref.aggregate.parts: [matrix_inner_bottom, mirror_matrix_inner_bottom,matrix_inner_top,mirror_matrix_inner_top]
           shift: [0,2]
