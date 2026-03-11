@@ -15,6 +15,12 @@ units:
   # Defaults to M2 Screws
   screwSize: 1.5
   standoffSize: 2.5
+  # Case
+  case_d: 2
+  pcb_d: 1.6
+  plate_pcb_gap: 5
+  bottom_pcb_gap: 4
+  caseHeight: case_d+bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d
 points:
   zones:
     matrix:
@@ -61,6 +67,11 @@ points:
         encrow:
           row_net: P024
           mirror.row_net: P024
+    # mount1:
+    #   key.tags: [mount]
+    #   anchor:
+    #     ref: encoders_enccol_encrow
+    #     shift: [-.5k+2, 0]
     mount1:
       key.tags: [mount]
       anchor:
@@ -109,22 +120,28 @@ outlines:
       fillet: 2
       points:
         - ref: matrix_inner_top
-          shift: [0, .5k+3]
+          shift: [.25k, .5k+3]
         - ref: mirror_matrix_inner_top
-          shift: [0, .5k+3]
+          shift: [.25k, .5k+3]
         - ref: mirror_matrix_inner_bottom
-          shift: [0, -.5k]
+          shift: [.25k, -.6k]
         - ref: matrix_inner_bottom
-          shift: [0, -.5k]
+          shift: [.25k, -.6k]
   encoder_area:
     - what: rectangle
       where: [encoder]
-      size: [5+k, 5+k]
+      size: [2+k, 2+k]
       corner: px
   encoder_socket:
     - what: circle
       where: [encoder]
       radius: 3.5
+  usb_access:
+    - what: rectangle
+      where:
+        ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top]
+        shift: [0, 0.5k+1]
+      size: [2mcux, 8]
   baseboard:
     - what: polygon
       operation: stack
@@ -169,19 +186,23 @@ outlines:
   board:
     - baseboard
     - controller_area
+    - encoder_area
     - -mounting
   plate:
-    - keys_area
-    - encoder_area
-    - controller_area
+    - board
     - -keys_socket
     - -encoder_socket
-    - -mounting
-  bottom:
+  outer_area:
     - what: outline
       name: board
-      expand: 2
+      expand: case_d
       joints: beveled
+  usb_wall:
+    - what: outline
+      name: usb_access
+    - what: outline
+      name: outer_area
+      operation: intersect
   preview:
     - plate
     - -raw
@@ -320,16 +341,27 @@ pcbs:
 cases:
   switch_plate:
     - name: plate
-      extrude: 1
+      extrude: pcb_d
   _bottom:
-    - name: bottom
+    - name: outer_area
       extrude: 1
   _outer_block:
-    - name: bottom
-      extrude: 5.6
+    - name: outer_area
+      extrude: caseHeight
+  _pcb:
+    - name: board
+      extrude: pcb_d  
   _inner_block:
     - name: baseboard
-      extrude: 5.6
+      extrude: caseHeight
+    - what: case
+      name: _pcb
+      operation: add
+      shift: [0, 0, caseHeight-2pcb_d] 
+    - what: case
+      name: switch_plate
+      operation: add
+      shift: [0, 0, caseHeight-pcb_d] 
   _wall:
     - _outer_block
     - -_inner_block
@@ -339,8 +371,15 @@ cases:
   _standoffs:
     - name: standoff
       extrude: 4
+  _usb_access_cut:
+    - name: usb_wall
+      extrude: 6
   case:
     - _wall
+    - what: case
+      name: _usb_access_cut
+      operation: subtract
+      shift: [0, 0, caseHeight-2pcb_d] 
     - _bottom
     - _standoffs
     - -_holes
