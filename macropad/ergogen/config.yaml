@@ -13,14 +13,14 @@ units:
   mcuy: 43.18
   mcux: 18.542
   # Defaults to M2 Screws
-  screwSize: 1.5
-  standoffSize: 2.5
+  screw_size: 1.5
+  standoff_size: 2.5
   # Case
   case_d: 2
   pcb_d: 1.6
   plate_pcb_gap: 5
   bottom_pcb_gap: 4
-  caseHeight: case_d+bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d
+  case_y: case_d+bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d
 points:
   zones:
     matrix:
@@ -67,28 +67,15 @@ points:
         encrow:
           row_net: P024
           mirror.row_net: P024
-    # mount1:
-    #   key.tags: [mount]
-    #   anchor:
-    #     ref: encoders_enccol_encrow
-    #     shift: [-.5k+2, 0]
     mount1:
       key.tags: [mount]
       anchor:
         ref.aggregate.parts: [matrix_outer_top,  matrix_outer_bottom, matrix_middle_top,  matrix_middle_bottom]
-    mount2:
+    mount:
       key.tags: [mount]
       anchor:
         ref.aggregate.parts: [matrix_inner_top, matrix_inner_bottom]
         shift: [.5k,0]
-    #mount3:
-    #  key.tags: [mount]
-    #  anchor:
-    #    ref.aggregate.parts: [mirror_matrix_middle_top, mirror_matrix_middle_bottom,mirror_matrix_outer_top, mirror_matrix_outer_bottom]
-    #mount4:
-    #  key.tags: [mount]
-    #  anchor:
-    #    ref.aggregate.parts: [mcu,encoders_encc1_encr2, encoders_encc1_encr1]
   rotate: 0
   mirror: &mirror
     ref: matrix_inner_top
@@ -177,21 +164,26 @@ outlines:
           shift: [-0.5k, 0.5k]
   mounting:
     - what: circle
-      radius: screwSize
+      radius: screw_size
       where: [mount]
   standoff:
     - what: circle
-      radius: standoffSize
+      radius: standoff_size
       where: [mount]
-  board:
+  inner_area:
     - baseboard
     - controller_area
     - encoder_area
-    - -mounting
+  board:
+    - inner_area
+    - -standoff
   plate:
-    - board
+    - what: outline
+      name: inner_area
+      expand: .5
     - -keys_socket
     - -encoder_socket
+    - -mounting
   outer_area:
     - what: outline
       name: board
@@ -342,44 +334,57 @@ cases:
   switch_plate:
     - name: plate
       extrude: pcb_d
+    - name: mounting
+      extrude: plate_pcb_gap
+      operation: subtract
+  _pcb:
+    - name: board
+      extrude: pcb_d
+  _holes:
+    - name: mounting
+      extrude: case_y
+  _standoffs:
+    - name: standoff
+      extrude: case_y-2pcb_d
+  _usb_access_cut:
+    - name: usb_wall
+      extrude: 7 #Switchplate will cover the gap
   _bottom:
     - name: outer_area
       extrude: 1
   _outer_block:
     - name: outer_area
-      extrude: caseHeight
-  _pcb:
-    - name: board
-      extrude: pcb_d  
+      extrude: case_y
   _inner_block:
-    - name: baseboard
-      extrude: caseHeight
-    - what: case
-      name: _pcb
-      operation: add
-      shift: [0, 0, caseHeight-2pcb_d] 
+    - what: outline
+      name: board
+      shift: [0, 0, case_d]
+      extrude: case_y-case_d
     - what: case
       name: switch_plate
-      operation: add
-      shift: [0, 0, caseHeight-pcb_d] 
+      shift: [0, 0, bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d]
+    - what: case
+      name: _holes
+      operation: subtract
   _wall:
     - _outer_block
     - -_inner_block
-  _holes:
-    - name: mounting
-      extrude: 4
-  _standoffs:
-    - name: standoff
-      extrude: 4
-  _usb_access_cut:
-    - name: usb_wall
-      extrude: 6
   case:
     - _wall
     - what: case
       name: _usb_access_cut
       operation: subtract
-      shift: [0, 0, caseHeight-2pcb_d] 
+      shift: [0, 0, case_y-plate_pcb_gap-pcb_d] 
     - _bottom
     - _standoffs
     - -_holes
+  case_plate_preview: #Assembled case
+    - case
+    - what: case
+      name: switch_plate
+      shift: [0,0,case_y-pcb_d]
+  case_pcb_preview: #Assembled case
+    - case
+    - what: case
+      name: _pcb
+      shift: [0,0,bottom_pcb_gap]
