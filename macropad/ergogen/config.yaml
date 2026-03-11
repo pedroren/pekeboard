@@ -21,6 +21,11 @@ units:
   plate_pcb_gap: 5
   bottom_pcb_gap: 4
   case_y: case_d+bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d
+  # Bottom support
+  #4x12x30mm  
+  batt_x: 12
+  batt_y: 30
+  batt_d: 4
 points:
   zones:
     matrix:
@@ -114,6 +119,17 @@ outlines:
           shift: [.25k, -.6k]
         - ref: matrix_inner_bottom
           shift: [.25k, -.6k]
+  battery_area:
+    - what: rectangle
+      where:
+        ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top,matrix_inner_bottom, mirror_matrix_inner_bottom]
+      size: [1.5batt_x, batt_y+4]
+      corner: 2
+  battery_wall:
+    - what: outline
+      name: battery_area
+      expand: case_d
+      joints: beveled
   encoder_area:
     - what: rectangle
       where: [encoder]
@@ -334,9 +350,9 @@ cases:
   switch_plate:
     - name: plate
       extrude: pcb_d
-    - name: mounting
-      extrude: plate_pcb_gap
-      operation: subtract
+    #- name: mounting
+    #  extrude: plate_pcb_gap
+    #  operation: subtract
   _pcb:
     - name: board
       extrude: pcb_d
@@ -345,7 +361,7 @@ cases:
       extrude: case_y
   _standoffs:
     - name: standoff
-      extrude: case_y-2pcb_d
+      extrude: case_y-pcb_d
   _usb_access_cut:
     - name: usb_wall
       extrude: 7 #Switchplate will cover the gap
@@ -362,9 +378,9 @@ cases:
       extrude: case_y-case_d
     - what: case
       name: switch_plate
-      shift: [0, 0, bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d]
+      shift: [0, 0, case_y-pcb_d]
     - what: case
-      name: _holes
+      name: _standoffs
       operation: subtract
   _wall:
     - _outer_block
@@ -378,6 +394,15 @@ cases:
     - _bottom
     - _standoffs
     - -_holes
+    - what: outline
+      name: battery_wall
+      extrude: bottom_pcb_gap
+      shift: [0, 0, case_d]
+    - what: outline
+      name: battery_area
+      extrude: bottom_pcb_gap
+      shift: [0, 0, case_d]
+      operation: subtract
   case_plate_preview: #Assembled case
     - case
     - what: case
