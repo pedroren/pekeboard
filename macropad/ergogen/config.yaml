@@ -40,10 +40,10 @@ points:
           key.column_net: P008
           key.mirror.column_net: P031
         middle:
-          key.column_net: P017
+          key.column_net: P011
           key.mirror.column_net: P029
         inner:
-          key.column_net: P020
+          key.column_net: P024
           key.mirror.column_net: P002
       rows:
         bottom:
@@ -70,8 +70,8 @@ points:
           key.mirror.column_net: P031
       rows:
         encrow:
-          row_net: P024
-          mirror.row_net: P024
+          row_net: P010
+          mirror.row_net: P010
     mount1:
       key.tags: [mount]
       anchor:
