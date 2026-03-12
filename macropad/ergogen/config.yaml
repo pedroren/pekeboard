@@ -144,7 +144,7 @@ outlines:
       where:
         ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top]
         shift: [0, 0.5k+1]
-      size: [2mcux, 8]
+      size: [2mcux, case_y]
   baseboard:
     - what: polygon
       operation: stack
@@ -186,6 +186,10 @@ outlines:
     - what: circle
       radius: standoff_size
       where: [mount]
+  pcb_support:
+    - what: outline
+      name: standoff
+      expand: 1
   inner_area:
     - baseboard
     - controller_area
@@ -203,7 +207,7 @@ outlines:
   outer_area:
     - what: outline
       name: board
-      expand: case_d
+      expand: case_d+.5
       joints: beveled
   usb_wall:
     - what: outline
@@ -211,6 +215,12 @@ outlines:
     - what: outline
       name: outer_area
       operation: intersect
+  usb_lip:
+    - what: outline
+      name: usb_access
+    - what: outline
+      name: plate
+      operation: intersect    
   preview:
     - plate
     - -raw
@@ -347,27 +357,35 @@ pcbs:
           shift: [0,2]
           rotate: 0
 cases:
-  switch_plate:
-    - name: plate
-      extrude: pcb_d
-    #- name: mounting
-    #  extrude: plate_pcb_gap
-    #  operation: subtract
   _pcb:
     - name: board
       extrude: pcb_d
+      shift: [0,0,+pcb_d+bottom_pcb_gap]
   _holes:
     - name: mounting
       extrude: case_y
   _standoffs:
     - name: standoff
       extrude: case_y-pcb_d
+  _pcb_support:
+    - name: pcb_support
+      extrude: pcb_d+bottom_pcb_gap
   _usb_access_cut:
     - name: usb_wall
       extrude: 7 #Switchplate will cover the gap
+      shift: [0, 0, case_y-plate_pcb_gap-pcb_d]   
+  _switch_plate:
+    - name: plate
+      extrude: pcb_d
+      shift: [0,0,case_y-pcb_d]
+  usb_access_lip:
+    - name: usb_wall
+      extrude: pcb_d #Switchplate will cover the gap
+      shift: [0, 0, case_y-pcb_d]       
+    - -_switch_plate
   _bottom:
     - name: outer_area
-      extrude: 1
+      extrude: pcb_d
   _outer_block:
     - name: outer_area
       extrude: case_y
@@ -377,7 +395,7 @@ cases:
       shift: [0, 0, case_d]
       extrude: case_y-case_d
     - what: case
-      name: switch_plate
+      name: _switch_plate
       shift: [0, 0, case_y-pcb_d]
     - what: case
       name: _standoffs
@@ -390,26 +408,23 @@ cases:
     - what: case
       name: _usb_access_cut
       operation: subtract
-      shift: [0, 0, case_y-plate_pcb_gap-pcb_d] 
     - _bottom
     - _standoffs
+    - _pcb_support
     - -_holes
-    - what: outline
-      name: battery_wall
-      extrude: bottom_pcb_gap
-      shift: [0, 0, case_d]
     - what: outline
       name: battery_area
       extrude: bottom_pcb_gap
       shift: [0, 0, case_d]
       operation: subtract
+  switch_plate:
+    - _switch_plate
+    - usb_access_lip
   case_plate_preview: #Assembled case
     - case
     - what: case
       name: switch_plate
-      shift: [0,0,case_y-pcb_d]
   case_pcb_preview: #Assembled case
     - case
     - what: case
       name: _pcb
-      shift: [0,0,bottom_pcb_gap]
