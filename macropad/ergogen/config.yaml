@@ -40,17 +40,17 @@ points:
           key.column_net: P008
           key.mirror.column_net: P031
         middle:
-          key.column_net: P017
+          key.column_net: P022
           key.mirror.column_net: P029
         inner:
-          key.column_net: P020
+          key.column_net: P024
           key.mirror.column_net: P002
       rows:
         bottom:
-          row_net: P100
+          row_net: P011
           mirror.row_net: P113
         top:
-          row_net: P022
+          row_net: P100
           mirror.row_net: P115
     encoders:
       key:
@@ -65,13 +65,13 @@ points:
           key.pin_a: P104
           key.pin_c: P106
           key.mirror.pin_a: P111
-          key.mirror.pin_c: P009
+          key.mirror.pin_c: P010
           key.column_net: P008
           key.mirror.column_net: P031
       rows:
         encrow:
-          row_net: P024
-          mirror.row_net: P024
+          row_net: P009
+          mirror.row_net: P009
     mount1:
       key.tags: [mount]
       anchor:

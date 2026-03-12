@@ -38,8 +38,8 @@ FH = { hold_on_other_press = true, unilateral_tap = false, hold_timeout = "200ms
 matrix_type = "normal"  # This is the default, can be omitted
 
 # Row and col pins are mandatory
-row_pins = ["P0_22", "P1_00", "P0_24", "P1_15", "P1_13"]
-col_pins = ["P0_08", "P0_17", "P0_20", "P0_31", "P0_29", "P0_02"]
+row_pins = ["P1_00", "P0_11", "P0_09", "P1_15", "P1_13"]
+col_pins = ["P0_08", "P0_22", "P0_24", "P0_02", "P0_29", "P0_31"]
 # RMK uses col2row as the default matrix diode direction, if you want to use a row2col matrix, add `row2col = true`
 row2col = false
 
@@ -54,7 +54,7 @@ resolution = 1
 # Encoder 1
 [[input_device.encoder]]
 pin_a = "P1_11"
-pin_b = "P0_09"
+pin_b = "P0_10"
 internal_pullup = true
 phase = "resolution"
 resolution = 1
