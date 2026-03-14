@@ -29,9 +29,9 @@ morses = [
   { tap = "F12", double_tap = "Escape", hold = "MO(1)" },
 ]
 
-[behavior.morse.profiles]
+#[behavior.morse.profiles]
 # This profile is recommended when the hold action activates a layer or acts as a modifier (without HRM) (for example thumb keys)
-FH = { hold_on_other_press = true, unilateral_tap = false, hold_timeout = "200ms", gap_timeout = "200ms" }
+#FH = { hold_on_other_press = true, unilateral_tap = false, hold_timeout = "200ms", gap_timeout = "200ms" }
 
 [matrix]
 # Default: normal matrix with diodes

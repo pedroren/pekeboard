@@ -1,9 +1,14 @@
 {
-  "scripts": {
-    "gen": "ergogen -d ."
+ "scripts": {
+    "generate:ergogen": "pnpm exec ergogen . -o output --svg",
+    "generate:inverse-svgs": "node ./scripts/invert-svgs.js",
+    "generate": "pnpm run generate:ergogen && pnpm run generate:inverse-svgs",
+    "watch:ergogen": "watchexec --quiet --wrap-process session -e yaml -- pnpm generate",
+    "watch:preview": "bash -c 'NAMES=${1:-keys}; WATCH=\"\"; for N in ${NAMES//,/ }; do WATCH=\"$WATCH -w output/outlines/$N-inverse.svg\"; done; watchexec --no-vcs-ignore --quiet --wrap-process session --clear $WATCH --shell=bash \"for N in ${NAMES//,/ }; do chafa output/outlines/\\$N-inverse.svg; done\"' --"
   },
+  "packageManager": "pnpm@10.8.1",
   "dependencies": {
     "ergogen": "^4.2.1",
-    "openjscad": "^1.6.1"
+    "@jscad/openjscad": "^1.6.1"
   }
 }
