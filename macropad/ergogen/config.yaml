@@ -12,6 +12,8 @@ units:
   kpy: k+py
   mcuy: 43.18
   mcux: 18.542
+  encx: 11.7
+  ency: 12
   # Defaults to M2 Screws
   screw_size: 1.5
   standoff_size: 2.5
@@ -119,6 +121,12 @@ outlines:
           shift: [.25k, -.6k]
         - ref: matrix_inner_bottom
           shift: [.25k, -.6k]
+  controller_cutout: 
+    - what: rectangle
+      where:
+        ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top,matrix_inner_bottom, mirror_matrix_inner_bottom]
+      size: [mcux+.5, mcuy+.5]
+      corner: 2
   battery_area:
     - what: rectangle
       where:
@@ -135,10 +143,10 @@ outlines:
       where: [encoder]
       size: [2+k, 2+k]
       corner: px
-  encoder_socket:
-    - what: circle
+  encoder_socket: #cutout
+    - what: rectangle
       where: [encoder]
-      radius: 3.5
+      size: [encx+.5, ency+.5]
   usb_access:
     - what: rectangle
       where:
