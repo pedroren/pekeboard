@@ -1,0 +1,6 @@
+[submodule "macropad/ergogen/footprints/ceoloide"]
+	path = macropad/ergogen/footprints/ceoloide
+	url = git@github.com:ceoloide/ergogen-footprints.git
+[submodule "pekeboard/ergogen/footprints/ceoloide"]
+	path = pekeboard/ergogen/footprints/ceoloide
+	url = git@github.com:ceoloide/ergogen-footprints.git
