@@ -1,0 +1,299 @@
+meta:
+  name: pepekey
+  version: 0.0.0
+  engine: 4.1.0
+  author: pedroren
+units:
+  k: u
+  p: 1
+  px: 4
+  py: 2
+  kpx: k+px
+  kpy: k+py
+points:
+  zones:
+    matrix:
+      anchor:
+        shift: [100, -120]
+      key:
+        padding: p+u
+        spread: p+u
+      columns:
+        outer:
+          key:
+            column_net: P21
+        pinky:
+          key:
+            column_net: P20
+        ring:
+          key:
+            stagger: 3u/4
+            column_net: P19
+        middle:
+          key:
+            stagger: 1u/4
+            column_net: P18
+        index:
+          key:
+            stagger: -1u/4
+            column_net: P15
+        inner:
+          key:
+            stagger: -1u/8
+            column_net: P14
+      rows:
+        bottom:
+          key:
+            row_net: P6
+        home:
+          key:
+            row_net: P5
+        top:
+          key:
+            row_net: P4
+        num:
+          key:
+            row_net: P3
+    thumbs:
+      key:
+        padding: 1u
+        spread: u+1u/8
+      anchor:
+        ref:  matrix_inner_bottom
+        shift:  [-1u/2,  -1u]
+      columns:
+        outer:
+          key:
+            splay: -10
+            origin: [-0.7 u, +0.5 u]
+            column_net: P18
+        middle:
+          key:
+            splay: -10
+            #stagger: -1u/6
+            origin: [-0.5 u, -0.5 u]
+            #rotate: -6
+            column_net: P15
+        inner:
+          key:
+            splay: -10
+            #stagger: -1u/4
+            #rotate: -6
+            origin: [-0.5 u, -0.5 u]
+            column_net: P14
+      rows:
+        thumbrow:
+          key:
+            row_net: P7
+  key:
+    footprints:
+      mx_hotswap:
+        type: mx
+        nets:
+          from: =name
+          to: GND
+        params:
+          hotswap: true
+          reverse: true
+          keycaps: true
+      diode:
+        type: diode
+        nets:
+          from: =colrow
+          to: =row_net
+        anchor:
+          shift: [0, -5]
+outlines:
+  raw:
+    - what: rectangle
+      where: true
+      asym: source
+      size: [kpx, kpy]
+      corner: px
+  keycaps:
+    - what: rectangle 
+      where: true
+      asym: source
+      size: [k, k] 
+      corner: 1
+  switches:
+    - what: rectangle
+      where: true
+      asym: source
+      size: 14
+  controller_area:
+    - what: rectangle
+      where:
+        - ref: matrix_inner_top
+          shift: [1.5k, 0]
+      size: [32, 70]
+      corner: px
+  screw_holes:
+    top_left:
+      what: circle
+      where:
+        - ref: matrix_ring_home
+          shift: [-0.6 k, 0.27 k]
+      radius: 1.05
+    bottom_left:
+      what: circle
+      where:
+        - ref: matrix_pinky_bottom
+          shift: [0.7 k, -0.1 k]
+      radius: 1.05
+    top_right:
+      what: circle
+      where:
+        - ref: matrix_inner_top
+          shift: [-0.52 k, 0]
+      radius: 1.05
+    palm:
+      what: circle
+      where:
+        - ref: matrix_index_bottom
+          shift: [-0.25 k, -1.06 k]
+      radius: 1.05
+    thumb:
+      what: circle
+      where:
+        - ref: thumbs_inner_thumbrow
+          shift: [-0.54 k, 0]
+      radius: 1.05
+  mounting_holes:
+    $extends: outlines.screw_holes
+    top_left:
+      radius: 1.7
+    bottom_left:
+      radius: 1.7
+    top_right:
+      radius: 1.7
+    palm:
+      radius: 1.7
+    thumb:
+      radius: 1.7
+    led:
+      what: circle
+      where:
+        - ref: matrix_inner_bottom
+          shift: [26.8, -10.6]
+      radius: 1.05
+  keyarea:
+    - what: polygon
+      operation: stack
+      fillet: 2
+      points:
+        - ref:  matrix_outer_bottom
+          shift: [-0.5kpx, -0.5kpy]
+        - ref:  matrix_pinky_bottom
+          shift: [0kpx, -0.5kpy]
+        - ref:  matrix_pinky_bottom
+          shift: [0.5kpx, -0.5kpy]
+        - ref:  matrix_ring_bottom
+          shift: [0kpx, -0.7kpy]
+        - ref:  matrix_index_bottom
+          shift: [-0.5kpx, -0.7kpy]
+        - ref:  thumbs_outer_thumbrow
+          shift: [-0.5kpx, -0.5kpy]
+        - ref:  thumbs_outer_thumbrow
+          shift: [0kpx, -0.5kpy]
+        - ref:  thumbs_middle_thumbrow
+          shift: [0kpx, -0.75kpy]
+        - ref:  thumbs_inner_thumbrow
+          shift: [0.5kpx, -0.75kpy]
+        - ref:  thumbs_inner_thumbrow
+          shift: [0.5kpx, 0.75kpy]
+        - ref:  thumbs_middle_thumbrow
+          shift: [0kpx, 0.75kpy]
+        - ref:  matrix_inner_bottom
+          shift: [0.5kpx, 0kpy]
+        - ref:  matrix_inner_num
+          shift: [0.5kpx, 0.5kpy]
+        - ref:  matrix_middle_num
+          shift: [0.5kpx, 0.6kpy]
+        - ref:  matrix_middle_num
+          shift: [-0.5kpx, 0.6kpy]
+        - ref:  matrix_ring_num
+          shift: [-0.5kpx, 0.5kpy]
+        - ref:  matrix_outer_num
+          shift: [-0.5kpx, 0.5kpy]
+  keywell:
+    - "keyarea"
+  base_outline:
+    - "keywell"
+    - "+controller_area"
+  bottom_outline:
+    - "base_outline"
+    - "-screw_holes"          
+  plate:
+    - "keywell"
+    - "-switches"
+    - "-screw_holes"     
+  pcb:
+    - "base_outline"
+    - "-mounting_holes"         
+  combo:
+    - name: keyarea
+    - operation: subtract
+      name: keycaps
+    - operation: add
+      name: controller_area
+pcbs:
+  top_plate:
+    template: kicad8
+    outlines:
+      edge:
+        outline: plate
+        layer: Edge.Cuts
+  bottom_plate:
+    outlines:
+      edge:
+        outline: bottom_outline
+        layer: Edge.Cuts        
+  pepekey:
+    template: kicad8
+    outlines:
+      main:
+        outline: pcb
+    footprints:
+      mx_hotswap:
+        what: mx
+        where:
+          - /matrix_.*/
+          - /thumbs_.*/
+        params:
+          hotswap: true
+          reverse: true
+          keycaps: true
+          from: "{{colrow}}"
+          to: "{{column_net}}"
+      diode:
+        what: diode
+        where:
+          - /matrix_.*/
+          - /thumbs_.*/
+        adjust.shift: [0, -5]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+      mcu:
+        what: ceoloide/mcu_nice_nano
+        where:
+          ref:
+            - matrix_inner_top
+          #shift: [20, -11]
+          shift: [26, 0]
+          rotate: 0
+        params:
+          #side: F
+          reversible: true
+      reset:
+        what: ceoloide/reset_switch_smd_side
+        where:
+          ref:
+            - matrix_inner_bottom
+          shift: [17, 10]
+          rotate: 270
+        params:
+          from: GND
+          to: RST
+cases:

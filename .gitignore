@@ -2,3 +2,6 @@ macropad/ergogen/output/*
 macropad/ergogen/pcbs/fp-info-cache
 macropad/ergogen/pcbs/*-backups
 node_modules/
+pekeboard/ergogen/output/*
+pekeboard/ergogen/pcbs/fp-info-cache
+pekeboard/ergogen/pcbs/*-backups
