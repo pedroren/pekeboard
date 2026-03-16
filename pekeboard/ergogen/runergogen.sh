@@ -4,4 +4,4 @@ ergogen .
 #openjscad output/cases/switch_plate.jscad -of stla -o cases/usb_access_lip.stl
 #openjscad output/cases/case_plate_preview.jscad -of stla 
 #openjscad output/cases/case_pcb_preview.jscad -of stla 
-#mv output/pcbs/*.kicad_pcb ./pcbs/
+mv output/pcbs/*.kicad_pcb ./pcbs/
