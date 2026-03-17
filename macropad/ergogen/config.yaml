@@ -10,11 +10,16 @@ units:
   py: 2
   kpx: k+px
   kpy: k+py
-  mcuy: 43.18
-  mcux: 18.542
-  encx: 11.7
-  ency: 12
-  # Defaults to M2 Screws
+  # components size
+  mcu_y: 34.1
+  mcu_x: 18.3
+  mcu_d: 3.3+12 # mcu+sockets
+  enc_x: 11.7
+  enc_y: 12
+  enc_d: 11.5
+  batt_x: 12
+  batt_y: 30
+  batt_d: 4  # Defaults to M2 Screws
   screw_size: 1.5
   standoff_size: 2.5
   # Case
@@ -23,11 +28,7 @@ units:
   plate_pcb_gap: 5
   bottom_pcb_gap: 4
   case_y: case_d+bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d
-  # Bottom support
-  #4x12x30mm  
-  batt_x: 12
-  batt_y: 30
-  batt_d: 4
+
 points:
   zones:
     matrix:
@@ -100,9 +101,6 @@ outlines:
     - what: rectangle
       where: [switch]
       size: [k-0.5, k-0.5]
-    #- what: rectangle
-    #  where: tag.encoder
-    #  size: [k-0.5, k-0.5]
   keys_area:
     - what: rectangle
       where: [switch]
@@ -124,8 +122,9 @@ outlines:
   controller_cutout: 
     - what: rectangle
       where:
-        ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top,matrix_inner_bottom, mirror_matrix_inner_bottom]
-      size: [mcux+.5, mcuy+.5]
+        ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top]
+        shift: [0, -.25k+1]
+      size: [mcu_x+1, mcu_y+2]
       corner: 2
   battery_area:
     - what: rectangle
@@ -146,13 +145,13 @@ outlines:
   encoder_socket: #cutout
     - what: rectangle
       where: [encoder]
-      size: [encx+.5, ency+.5]
+      size: [enc_x+.5, enc_y+.5]
   usb_access:
     - what: rectangle
       where:
         ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top]
         shift: [0, 0.5k+1]
-      size: [2mcux, case_y]
+      size: [2mcu_x, case_y]
   baseboard:
     - what: polygon
       operation: stack
@@ -209,6 +208,7 @@ outlines:
     - what: outline
       name: inner_area
       expand: .5
+    - -controller_cutout
     - -keys_socket
     - -encoder_socket
     - -mounting
@@ -284,7 +284,7 @@ pcbs:
         where:
           ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top]
           shift: [0, -.25k]
-          rotate: -0
+          rotate: 0
         params:
           reversible: false
           P21: P031
@@ -427,12 +427,16 @@ cases:
       operation: subtract
   switch_plate:
     - _switch_plate
-    - usb_access_lip
-  case_plate_preview: #Assembled case
+    #- usb_access_lip
+  case_plate_preview: # Assembly compatibility
     - case
     - what: case
       name: switch_plate
-  case_pcb_preview: #Assembled case
+  case_pcb_preview: # Assembly compatibility
     - case
     - what: case
       name: _pcb
+  pcb_plate_preview: # Assembly compatibility
+    - switch_plate
+    - what: case
+      name: _pcb      

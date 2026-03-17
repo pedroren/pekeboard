@@ -6449,14 +6449,14 @@ endfacet
 facet normal 0 0 1
 outer loop
 vertex 146.75000000000688 -87.5 14.2
-vertex 148.058 -87.5 14.2
-vertex 148.058 -85 14.2
+vertex 148.3 -87.5 14.2
+vertex 148.3 -85 14.2
 endloop
 endfacet
 facet normal 0 0 1
 outer loop
 vertex 146.75000000000688 -87.5 14.2
-vertex 148.058 -85 14.2
+vertex 148.3 -85 14.2
 vertex 146.7499996499999 -85 14.2
 endloop
 endfacet
@@ -6576,14 +6576,14 @@ facet normal 0 0 1
 outer loop
 vertex 186.45000000000093 -87.5 14.2
 vertex 186.45 -85 14.2
-vertex 185.142 -85 14.2
+vertex 184.9 -85 14.2
 endloop
 endfacet
 facet normal 0 0 1
 outer loop
 vertex 186.45000000000093 -87.5 14.2
-vertex 185.142 -85 14.2
-vertex 185.142 -87.5 14.2
+vertex 184.9 -85 14.2
+vertex 184.9 -87.5 14.2
 endloop
 endfacet
 facet normal 0 0 -1
@@ -12321,56 +12321,56 @@ endloop
 endfacet
 facet normal 0 0 1
 outer loop
-vertex 185.142 -87.5 7.6
-vertex 185.142 -85 7.6
-vertex 148.058 -85 7.6
+vertex 184.9 -87.5 7.6
+vertex 184.9 -85 7.6
+vertex 148.3 -85 7.6
 endloop
 endfacet
 facet normal 0 0 1
 outer loop
-vertex 185.142 -87.5 7.6
-vertex 148.058 -85 7.6
-vertex 148.058 -87.5 7.6
+vertex 184.9 -87.5 7.6
+vertex 148.3 -85 7.6
+vertex 148.3 -87.5 7.6
 endloop
 endfacet
 facet normal -1 0 0
 outer loop
-vertex 185.142 -85 14.2
-vertex 185.142 -85 7.6
-vertex 185.142 -87.5 7.6
+vertex 184.9 -85 14.2
+vertex 184.9 -85 7.6
+vertex 184.9 -87.5 7.6
 endloop
 endfacet
 facet normal -1 0 0
 outer loop
-vertex 185.142 -85 14.2
-vertex 185.142 -87.5 7.6
-vertex 185.142 -87.5 14.2
+vertex 184.9 -85 14.2
+vertex 184.9 -87.5 7.6
+vertex 184.9 -87.5 14.2
 endloop
 endfacet
 facet normal 1 0 0
 outer loop
-vertex 148.058 -85 7.6
-vertex 148.058 -85 14.2
-vertex 148.058 -87.5 14.2
+vertex 148.3 -85 7.6
+vertex 148.3 -85 14.2
+vertex 148.3 -87.5 14.2
 endloop
 endfacet
 facet normal 1 0 0
 outer loop
-vertex 148.058 -85 7.6
-vertex 148.058 -87.5 14.2
-vertex 148.058 -87.5 7.6
+vertex 148.3 -85 7.6
+vertex 148.3 -87.5 14.2
+vertex 148.3 -87.5 7.6
 endloop
 endfacet
 facet normal 0 1 0
 outer loop
-vertex 148.058 -85 14.2
-vertex 148.058 -85 7.6
+vertex 148.3 -85 14.2
+vertex 148.3 -85 7.6
 vertex 146.74999964999992 -85 7.6
 endloop
 endfacet
 facet normal 0 1 0
 outer loop
-vertex 148.058 -85 14.2
+vertex 148.3 -85 14.2
 vertex 146.74999964999992 -85 7.6
 vertex 146.7499996499999 -85 14.2
 endloop
@@ -12379,40 +12379,40 @@ facet normal 0 1 0
 outer loop
 vertex 186.45 -85 14.2
 vertex 186.45 -85 7.6
-vertex 185.142 -85 7.6
+vertex 184.9 -85 7.6
 endloop
 endfacet
 facet normal 0 1 0
 outer loop
 vertex 186.45 -85 14.2
-vertex 185.142 -85 7.6
-vertex 185.142 -85 14.2
+vertex 184.9 -85 7.6
+vertex 184.9 -85 14.2
 endloop
 endfacet
 facet normal 0 1 0
 outer loop
-vertex 148.058 -85 7.6
-vertex 185.142 -85 7.6
+vertex 148.3 -85 7.6
+vertex 184.9 -85 7.6
 vertex 186.45 -85 7.6
 endloop
 endfacet
 facet normal 0 1 0
 outer loop
-vertex 148.058 -85 7.6
+vertex 148.3 -85 7.6
 vertex 186.45 -85 7.6
 vertex 186.45 -85 0
 endloop
 endfacet
 facet normal 0 1 0
 outer loop
-vertex 148.058 -85 7.6
+vertex 148.3 -85 7.6
 vertex 186.45 -85 0
 vertex 146.74999964999995 -85 0
 endloop
 endfacet
 facet normal 0 1 0
 outer loop
-vertex 148.058 -85 7.6
+vertex 148.3 -85 7.6
 vertex 146.74999964999995 -85 0
 vertex 146.74999964999992 -85 7.6
 endloop
@@ -12421,20 +12421,20 @@ facet normal 0 -1 0
 outer loop
 vertex 186.45 -87.5 2
 vertex 186.45000000000041 -87.5 7.6
-vertex 185.142 -87.5 7.6
+vertex 184.9 -87.5 7.6
 endloop
 endfacet
 facet normal 0 -1 0
 outer loop
 vertex 186.45 -87.5 2
-vertex 185.142 -87.5 7.6
-vertex 148.058 -87.5 7.6
+vertex 184.9 -87.5 7.6
+vertex 148.3 -87.5 7.6
 endloop
 endfacet
 facet normal 0 -1 0
 outer loop
 vertex 186.45 -87.5 2
-vertex 148.058 -87.5 7.6
+vertex 148.3 -87.5 7.6
 vertex 146.7500000000031 -87.5 7.6
 endloop
 endfacet
@@ -12447,14 +12447,14 @@ endloop
 endfacet
 facet normal 0 -1 0
 outer loop
-vertex 148.058 -87.5 7.6
-vertex 148.058 -87.5 14.2
+vertex 148.3 -87.5 7.6
+vertex 148.3 -87.5 14.2
 vertex 146.75000000000688 -87.5 14.2
 endloop
 endfacet
 facet normal 0 -1 0
 outer loop
-vertex 148.058 -87.5 7.6
+vertex 148.3 -87.5 7.6
 vertex 146.75000000000688 -87.5 14.2
 vertex 146.7500000000031 -87.5 7.6
 endloop
@@ -12463,14 +12463,14 @@ facet normal 0 -1 0
 outer loop
 vertex 186.45000000000041 -87.5 7.6
 vertex 186.45000000000093 -87.5 14.2
-vertex 185.142 -87.5 14.2
+vertex 184.9 -87.5 14.2
 endloop
 endfacet
 facet normal 0 -1 0
 outer loop
 vertex 186.45000000000041 -87.5 7.6
-vertex 185.142 -87.5 14.2
-vertex 185.142 -87.5 7.6
+vertex 184.9 -87.5 14.2
+vertex 184.9 -87.5 7.6
 endloop
 endfacet
 facet normal 0.9951847266721956 -0.09801714032957302 1.7305550384974368e-14
