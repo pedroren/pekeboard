@@ -10,12 +10,13 @@ units:
   py: 2
   kpx: k+px
   kpy: k+py
-  # components sizes
-  mcuy: 43.18
-  mcux: 18.542
+  # components size
+  mcu_y: 34.1
+  mcu_x: 18.3
+  mcu_d: 3.3+12 # mcu+sockets
   batt_x: 12
   batt_y: 30
-  batt_d: 4
+  batt_d: 4  
   # Defaults to M2 Screws
   screw_size: 1.5
   standoff_size: 2.5
@@ -126,7 +127,7 @@ points:
       key.tags: [mcu]          
       anchor: 
         - ref: matrix_inner_top
-          shift: [.5k+mcux-2, .5k]
+          shift: [.5k+mcu_x-2, .5k]
           rotate: 0
 outlines:
   raw:
@@ -150,13 +151,13 @@ outlines:
     - what: rectangle
       where: [mcu]
       asym: source
-      size: [mcux, mcuy]
+      size: [mcu_x, mcu_y]
   controller_area:
     - what: rectangle
       where: [mcu]        
-      size: [1.5mcux+2, 1.5mcuy]
+      size: [1.5mcu_x+2, 1.5mcu_y]
       corner: px
-      adjust.shift: [0,-.25mcuy]
+      adjust.shift: [0,-.25mcu_y]
   screw_holes:
     - what: circle
       radius: screw_size    
@@ -308,7 +309,7 @@ pcbs:
         where:
           ref:
             - controller
-          shift: [.5mcux+3, 0]
+          shift: [.5mcu_x+3, 0]
           rotate: 270
         params:
           from: GND
@@ -324,7 +325,7 @@ pcbs:
         where:
           ref:
             - controller
-          shift: [.5mcux+3,-.5mcuy]
+          shift: [.5mcu_x+3,-.5mcu_y]
           rotate: 0
       batt_connector:
         what: ceoloide/battery_connector_jst_ph_2
@@ -336,5 +337,5 @@ pcbs:
         where:
           ref:
             - controller
-          shift: [.5k-3, -.5mcuy]
+          shift: [.5k-3, -.5mcu_y]
           rotate: -90

@@ -19,7 +19,8 @@ units:
   enc_d: 11.5
   batt_x: 12
   batt_y: 30
-  batt_d: 4  # Defaults to M2 Screws
+  batt_d: 4  
+  # Defaults to M2 Screws
   screw_size: 1.5
   standoff_size: 2.5
   # Case
