@@ -337,5 +337,5 @@ pcbs:
         where:
           ref:
             - controller
-          shift: [.5k-3, -.5mcu_y]
+          shift: [.5k-3, -.5mcu_y-5]
           rotate: -90

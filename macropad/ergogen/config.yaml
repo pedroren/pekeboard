@@ -76,6 +76,12 @@ points:
         encrow:
           row_net: P009
           mirror.row_net: P009
+    mcu:
+      key.tags: [mcu]
+      key.asym: source
+      anchor:
+        ref.aggregate.parts: [matrix_inner_top, matrix_inner_bottom]
+        shift: [.5k+mcu_x, .25k]
     mount1:
       key.tags: [mount]
       anchor:
@@ -88,7 +94,7 @@ points:
   rotate: 0
   mirror: &mirror
     ref: matrix_inner_top
-    distance: 2.8k
+    distance: 3mcu_x
 outlines:
   raw:
     - what: rectangle
@@ -122,10 +128,10 @@ outlines:
           shift: [.25k, -.6k]
   controller_cutout: 
     - what: rectangle
-      where:
-        ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top]
-        shift: [0, -.25k+1]
-      size: [mcu_x+1, mcu_y+2]
+      where: [mcu]
+      adjust:
+        shift: [0, 2]
+      size: [mcu_x+2, mcu_y+3]
       corner: 2
   battery_area:
     - what: rectangle
@@ -282,9 +288,10 @@ pcbs:
           rotate: 180
       mcu:
         what: ceoloide/mcu_nice_nano
-        where:
-          ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top]
-          shift: [0, -.25k]
+        where: [mcu]
+          #ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top]
+        adjust: 
+          #shift: [0, -.25k]
           rotate: 0
         params:
           reversible: false
@@ -383,11 +390,15 @@ cases:
     - name: usb_wall
       extrude: 7 #Switchplate will cover the gap
       shift: [0, 0, case_y-plate_pcb_gap-pcb_d]   
+  _controller_cutout:
+    - name: controller_cutout
+      extrude: pcb_d
+      shift: [0, 0, case_y-pcb_d]
   _switch_plate:
     - name: plate
       extrude: pcb_d
-      shift: [0,0,case_y-pcb_d]
-  usb_access_lip:
+      shift: [0, 0, case_y-pcb_d]
+  usb_access_lip: #Future cover on top of the mcu
     - name: usb_wall
       extrude: pcb_d #Switchplate will cover the gap
       shift: [0, 0, case_y-pcb_d]       
@@ -429,6 +440,7 @@ cases:
   switch_plate:
     - _switch_plate
     #- usb_access_lip
+    - -_controller_cutout
   case_plate_preview: # Assembly compatibility
     - case
     - what: case
