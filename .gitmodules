@@ -4,3 +4,6 @@
 [submodule "pekeboard/ergogen/footprints/ceoloide"]
 	path = pekeboard/ergogen/footprints/ceoloide
 	url = git@github.com:ceoloide/ergogen-footprints.git
+[submodule "zmk-firmware"]
+	path = zmk-firmware
+	url = git@github.com:pedroren/pekeboard-zmk.git
