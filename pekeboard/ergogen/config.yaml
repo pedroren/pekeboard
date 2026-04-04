@@ -166,6 +166,10 @@ outlines:
     - what: circle
       radius: standoff_size    
       where: [mount]
+  pcb_support:
+    - what: outline
+      name: mounting_holes
+      expand: 1
   keyarea: #starting bottom left
     - what: polygon
       operation: stack
@@ -217,6 +221,11 @@ outlines:
   bottom_outline:
     - "base_outline"
     - "-screw_holes"  
+  outer_area:
+    - what: outline
+      name: base_outline
+      expand: case_d+.5
+      joints: beveled
   plate:
     - "keywell"
     - "-switches"
@@ -339,3 +348,60 @@ pcbs:
             - controller
           shift: [.5k-3, -.5mcu_y-5]
           rotate: -90
+cases:
+  _pcb:
+    - name: pcb
+      extrude: pcb_d
+      shift: [0,0,+pcb_d+bottom_pcb_gap]
+  _switch_plate:
+      - name: plate
+        extrude: pcb_d
+        shift: [0, 0, case_y-pcb_d]
+  _standoffs:
+    - name: mounting_holes
+      extrude: case_y-pcb_d
+  _pcb_support:
+    - name: pcb_support
+      extrude: pcb_d+bottom_pcb_gap
+  _holes:
+    - name: screw_holes
+      extrude: case_y
+  pcb:
+    - _pcb      
+  switch_plate:
+    - _switch_plate      
+  _bottom:
+    - name: outer_area
+      extrude: pcb_d
+  _outer_block:
+    - name: outer_area
+      extrude: case_y
+  _inner_block:
+    - what: outline
+      name: base_outline
+      shift: [0, 0, case_d]
+      extrude: case_y-case_d
+    - what: case
+      name: _standoffs
+      operation: subtract
+  _wall:
+    - _outer_block
+    - -_inner_block
+  case:
+    - _wall
+    - _bottom
+    - _pcb_support
+    - _standoffs
+    - -_holes
+  case_plate_preview: # Assembly compatibility
+    - case
+    - what: case
+      name: switch_plate
+  case_pcb_preview: # Assembly compatibility
+    - case
+    - what: case
+      name: _pcb
+  pcb_plate_preview: # Assembly compatibility
+    - switch_plate
+    - what: case
+      name: _pcb          
