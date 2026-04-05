@@ -4,12 +4,14 @@ meta:
   engine: 4.1.0
   author: pedroren
 units:
-  k: u
-  p: 1
+  kx: u
+  ky: u
+  p: 0
+  # padding for outer keys
   px: 4
+  kpx: kx+px
   py: 2
-  kpx: k+px
-  kpy: k+py
+  kpy: ky+py
   # components size
   mcu_y: 34.1
   mcu_x: 18.3
@@ -21,12 +23,12 @@ units:
   screw_size: 1.5
   standoff_size: 2.5
   # Case
-  case_d: 2
+  case_d: 1.5
   pcb_d: 1.6
-  plate_pcb_gap: 5
-  bottom_pcb_gap: 4
+  plate_pcb_gap: 3
+  bottom_pcb_gap: 3
   usb_access_x: 13
-  usb_access_d: 7
+  usb_access_d: 6
   case_y: case_d+bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d
 points:
   zones:
@@ -34,8 +36,8 @@ points:
       anchor:
         shift: [100, -120] #kicad
       key:
-        padding: p+u
-        spread: p+u
+        padding: ky+p
+        spread: ky+p
         tags: mx_key
       columns:
         outer:
@@ -104,32 +106,32 @@ points:
       key.tags: [mount]
       anchor:
         - ref: matrix_ring_top
-          shift: [-0.5 k, 0.5 k]
+          shift: [-0.5 kx, 0.5 ky]
     mount_bottom_left:
       key.tags: [mount]
       anchor:
         - ref: matrix_pinky_bottom
-          shift: [0.6 k, 0.1 k]
+          shift: [0.6 kx, 0.1 ky]
     mount_top_right:
       key.tags: [mount]
       anchor:
         - ref: matrix_inner_top
-          shift: [-0.52 k, .5k+1]
+          shift: [-0.52 kx, .5ky+1]
     mount_palm:
       key.tags: [mount]
       anchor:
         - ref: matrix_index_bottom
-          shift: [-0.25 k, -.7 k]
+          shift: [-0.25 kx, -.7 ky]
     mount_thumb:
       key.tags: [mount]
       anchor:
         - ref: thumbs_inner_thumbrow
-          shift: [-0.6 k, 0]
+          shift: [-0.6 kx, 0]
     controller:
       key.tags: [mcu]          
       anchor: 
         - ref: matrix_inner_top
-          shift: [.5k+mcu_x-2, .5k]
+          shift: [.5kx+mcu_x-2, .5ky]
           rotate: 0
     reset_button:
       key.tags: [reset_btn]          
@@ -146,13 +148,13 @@ outlines:
     - what: rectangle
       where: true
       asym: source
-      size: [kpx, kpy]
+      size: [kx, ky]
       corner: px
   keycaps:
     - what: rectangle 
       where: [mx_key]
       asym: source
-      size: [k, k] 
+      size: [kx, ky] 
       corner: 1
   switches:
     - what: rectangle
@@ -179,19 +181,19 @@ outlines:
   power_access:      
     - what: rectangle
       where: power_button
-      size: [case_d+2, usb_access_x]
+      size: [case_d+1, usb_access_x-2]
       adjust.shift: [case_d+2, 0]    
   controller_area:
     - what: rectangle
       where: [mcu]        
-      size: [1.5mcu_x+2, 1.5mcu_y]
+      size: [1.5mcu_x+2, 1.5mcu_y-4]
       corner: px
-      adjust.shift: [0,-.25mcu_y]
+      adjust.shift: [0,-.25mcu_y+2]
   battery_area:
     - what: rectangle
       where: [mcu]
-      size: [1.5mcu_x+2, batt_y+9]
-      adjust.shift: [0,-.5mcu_y-.5batt_y-3]
+      size: [1.5mcu_x+2, batt_y+11]
+      adjust.shift: [0,-.5mcu_y-.5batt_y-5]
       corner: px
   screw_holes:
     - what: circle
@@ -382,13 +384,13 @@ pcbs:
         where:
           ref:
             - controller
-          shift: [.5k-3, -.5mcu_y-5]
+          shift: [.5kx-3, -.5mcu_y-5]
           rotate: -90
 cases:
   _pcb:
     - name: pcb
       extrude: pcb_d
-      shift: [0,0,+pcb_d+bottom_pcb_gap]
+      shift: [0,0,case_d+pcb_d+bottom_pcb_gap]
   _switch_plate:
       - name: plate
         extrude: pcb_d
@@ -405,12 +407,12 @@ cases:
   _usb_cutout:
     - name: usb_access
       extrude: case_d+2
-      shift: [0, 0, case_d+pcb_d+bottom_pcb_gap]
+      shift: [0, 0, case_d+pcb_d+bottom_pcb_gap+1]
       rotate: [90,0,0]
   _reset_cutout:
     - name: reset_access
       extrude: case_d+2
-      shift: [0, 0, case_d+.5pcb_d+bottom_pcb_gap]
+      shift: [0, 0, case_d+2pcb_d+bottom_pcb_gap]
       rotate: [0,90,0]
   _power_cutout:
     - name: power_access
