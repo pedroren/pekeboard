@@ -25,6 +25,8 @@ units:
   pcb_d: 1.6
   plate_pcb_gap: 5
   bottom_pcb_gap: 4
+  usb_access_x: 13
+  usb_access_d: 7
   case_y: case_d+bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d
 points:
   zones:
@@ -129,6 +131,16 @@ points:
         - ref: matrix_inner_top
           shift: [.5k+mcu_x-2, .5k]
           rotate: 0
+    reset_button:
+      key.tags: [reset_btn]          
+      anchor: 
+        - ref: controller
+          shift: [.5mcu_x+3, 0]
+    power_button:
+      key.tags: [power_btn]          
+      anchor: 
+        - ref: controller
+          shift: [.5mcu_x+3, -.75mcu_y+3]          
 outlines:
   raw:
     - what: rectangle
@@ -152,6 +164,23 @@ outlines:
       where: [mcu]
       asym: source
       size: [mcu_x, mcu_y]
+  usb_access:      
+    - what: rectangle
+      where: [mcu]
+      asym: source
+      size: [usb_access_x, usb_access_d]
+      adjust.shift: [0, .5mcu_y+3]
+      corner: 2
+  reset_access:
+    - what: circle
+      where: reset_button
+      radius: 2
+      adjust.shift: [1.5, 0]
+  power_access:      
+    - what: rectangle
+      where: power_button
+      size: [case_d+2, usb_access_x]
+      adjust.shift: [case_d+2, 0]    
   controller_area:
     - what: rectangle
       where: [mcu]        
@@ -317,8 +346,8 @@ pcbs:
         what: ceoloide/reset_switch_smd_side
         where:
           ref:
-            - controller
-          shift: [.5mcu_x+3, 0]
+            - reset_button
+          shift: [0, 0]
           rotate: 270
         params:
           from: GND
@@ -333,8 +362,8 @@ pcbs:
           switch_3dmodel_xyz_rotation: [0,0,-90]
         where:
           ref:
-            - controller
-          shift: [.5mcu_x+3,-.5mcu_y]
+            - power_button
+          shift: [0, 0]
           rotate: 0
       batt_connector:
         what: ceoloide/battery_connector_jst_ph_2
@@ -366,6 +395,20 @@ cases:
   _holes:
     - name: screw_holes
       extrude: case_y
+  _usb_cutout:
+    - name: usb_access
+      extrude: case_d+2
+      shift: [0, 0, case_d+pcb_d+bottom_pcb_gap]
+      rotate: [90,0,0]
+  _reset_cutout:
+    - name: reset_access
+      extrude: case_d+2
+      shift: [0, 0, case_d+.5pcb_d+bottom_pcb_gap]
+      rotate: [0,90,0]
+  _power_cutout:
+    - name: power_access
+      extrude: usb_access_d-1
+      shift: [0, 0, case_d+.5pcb_d+bottom_pcb_gap]     
   pcb:
     - _pcb      
   switch_plate:
@@ -393,6 +436,9 @@ cases:
     - _pcb_support
     - _standoffs
     - -_holes
+    - -_usb_cutout
+    - -_reset_cutout
+    - -_power_cutout
   case_plate_preview: # Assembly compatibility
     - case
     - what: case
