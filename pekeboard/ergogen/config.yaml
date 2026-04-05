@@ -14,9 +14,9 @@ units:
   mcu_y: 34.1
   mcu_x: 18.3
   mcu_d: 3.3+12 # mcu+sockets
-  batt_x: 12
-  batt_y: 30
-  batt_d: 4  
+  batt_x: 18
+  batt_y: 32
+  batt_d: 6.5 
   # Defaults to M2 Screws
   screw_size: 1.5
   standoff_size: 2.5
@@ -187,6 +187,12 @@ outlines:
       size: [1.5mcu_x+2, 1.5mcu_y]
       corner: px
       adjust.shift: [0,-.25mcu_y]
+  battery_area:
+    - what: rectangle
+      where: [mcu]
+      size: [1.5mcu_x+2, batt_y+9]
+      adjust.shift: [0,-.5mcu_y-.5batt_y-3]
+      corner: px
   screw_holes:
     - what: circle
       radius: screw_size    
@@ -248,11 +254,12 @@ outlines:
     - keywell
     - controller_area
   bottom_outline:
-    - "base_outline"
-    - "-screw_holes"  
+    - base_outline
+    - -screw_holes
+    - battery_area
   outer_area:
     - what: outline
-      name: base_outline
+      name: bottom_outline
       expand: case_d+.5
       joints: beveled
   plate:
@@ -409,10 +416,15 @@ cases:
     - name: power_access
       extrude: usb_access_d-1
       shift: [0, 0, case_d+.5pcb_d+bottom_pcb_gap]     
+  _battery_cover:
+    - name: battery_area
+      extrude: pcb_d
+      shift: [0, 0, case_y-pcb_d]
   pcb:
     - _pcb      
   switch_plate:
     - _switch_plate      
+    - _battery_cover
   _bottom:
     - name: outer_area
       extrude: pcb_d
@@ -421,7 +433,7 @@ cases:
       extrude: case_y
   _inner_block:
     - what: outline
-      name: base_outline
+      name: bottom_outline
       shift: [0, 0, case_d]
       extrude: case_y-case_d
     - what: case
