@@ -8,7 +8,7 @@ units:
   ky: u
   p: 0
   # padding for outer keys
-  px: 4
+  px: 2
   kpx: kx+px
   py: 2
   kpy: ky+py
@@ -213,43 +213,51 @@ outlines:
       fillet: 2
       points:
         - ref:  matrix_outer_bottom
-          shift: [-0.5kpx, -0.6kpy]
+          shift: [-0.5kpx, -0.5kpy]
         - ref:  matrix_pinky_bottom
-          shift: [0kpx, -0.6kpy]
+          shift: [0kpx, -0.5kpy]
         - ref:  matrix_pinky_bottom
-          shift: [0.5kpx, -0.6kpy]
+          shift: [0.5kpx, -0.5kpy]
         - ref:  matrix_ring_bottom
-          shift: [0kpx, -0.7kpy]
+          shift: [0kpx, -0.6kpy]
         - ref:  matrix_index_bottom
-          shift: [-0.5kpx, -0.7kpy]
-        - ref:  thumbs_outer_thumbrow
           shift: [-0.5kpx, -0.6kpy]
         - ref:  thumbs_outer_thumbrow
-          shift: [0kpx, -0.6kpy]
+          shift: [-0.5kpx, -0.5kpy]
+        - ref:  thumbs_outer_thumbrow
+          shift: [0kpx, -0.5kpy]
         - ref:  thumbs_middle_thumbrow
-          shift: [0kpx, -0.65kpy]
+          shift: [0kpx, -0.5kpy]
         - ref:  thumbs_inner_thumbrow
-          shift: [0.6kpx, -0.7kpy]
+          shift: [0.5kpx, -0.5kpy]
         - ref:  thumbs_inner_thumbrow
-          shift: [0.6kpx, 0.7kpy]
+          shift: [0.5kpx, 0.5kpy]
+        - ref:  thumbs_inner_thumbrow
+          shift: [-0.5kpx, 0.5kpy]
         - ref:  thumbs_middle_thumbrow
-          shift: [0kpx, 0.75kpy]
+          shift: [0kpx, 0.5kpy]
         - ref:  matrix_inner_bottom
           shift: [0.6kpx, 0kpy]
         - ref:  matrix_inner_num
           shift: [0.6kpx, 0.5kpy]
+        - ref:  matrix_index_num
+          shift: [0.25kpx, 0.5kpy]
+        - ref:  matrix_index_num
+          shift: [-0.25kpx, 0.5kpy]
         - ref:  matrix_middle_num
-          shift: [0.6kpx, 0.6kpy]
+          shift: [0.5kpx, 0.5kpy]
         - ref:  matrix_middle_num
-          shift: [-0.5kpx, 0.6kpy]
-        - ref:  matrix_ring_num
           shift: [-0.5kpx, 0.5kpy]
+        - ref:  matrix_ring_num
+          shift: [0.25kpx, 0.5kpy]
+        - ref:  matrix_ring_num
+          shift: [-0.5kpx, 0.5kpy]          
         - ref:  matrix_pinky_num
-          shift: [0.25kpx, 0.6kpy]
+          shift: [0.25kpx, 0.5kpy]
         - ref:  matrix_pinky_num
-          shift: [-0.5kpx, 0.6kpy]
+          shift: [-0.5kpx, 0.5kpy]
         - ref:  matrix_outer_num
-          shift: [-0.5kpx, 0.6kpy]
+          shift: [-0.5kpx, 0.5kpy]
   keywell:
     - "keyarea"
   base_outline:
