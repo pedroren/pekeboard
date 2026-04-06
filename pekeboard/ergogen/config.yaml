@@ -432,6 +432,11 @@ cases:
     - -_usb_cutout
     - -_reset_cutout
     - -_power_cutout
+  sandwich_case:
+    - _bottom
+    - _pcb_support
+    - _standoffs
+    - -_holes
   case_plate_preview: # Assembly compatibility
     - case
     - what: case
