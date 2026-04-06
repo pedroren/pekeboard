@@ -110,8 +110,8 @@ points:
     mount_bottom_left:
       key.tags: [mount]
       anchor:
-        - ref: matrix_pinky_bottom
-          shift: [0.6 kx, 0.1 ky]
+        - ref: matrix_ring_bottom
+          shift: [-0.5kx, -0.25ky]
     mount_top_right:
       key.tags: [mount]
       anchor:
@@ -121,7 +121,7 @@ points:
       key.tags: [mount]
       anchor:
         - ref: matrix_index_bottom
-          shift: [-0.25 kx, -.7 ky]
+          shift: [-0.5 kx, 0ky]
     mount_thumb:
       key.tags: [mount]
       anchor:
@@ -147,29 +147,24 @@ outlines:
   raw:
     - what: rectangle
       where: true
-      asym: source
       size: [kx, ky]
       corner: px
   keycaps:
     - what: rectangle 
       where: [mx_key]
-      asym: source
       size: [kx, ky] 
       corner: 1
   switches:
     - what: rectangle
       where: [mx_key]
-      asym: source
       size: 14
   controller:
     - what: rectangle
       where: [mcu]
-      asym: source
       size: [mcu_x, mcu_y]
   usb_access:      
     - what: rectangle
       where: [mcu]
-      asym: source
       size: [usb_access_x, usb_access_d]
       adjust.shift: [0, .5mcu_y+3]
       corner: 2
@@ -181,19 +176,19 @@ outlines:
   power_access:      
     - what: rectangle
       where: power_button
-      size: [case_d+1, usb_access_x-2]
-      adjust.shift: [case_d+2, 0]    
+      size: [pcb_d+1, usb_access_x-2]
+      adjust.shift: [case_d, 0]    
   controller_area:
     - what: rectangle
       where: [mcu]        
-      size: [1.5mcu_x+2, 1.5mcu_y-4]
+      size: [1.5mcu_x+3, 1.5mcu_y-4]
       corner: px
-      adjust.shift: [0,-.25mcu_y+2]
+      adjust.shift: [-1,-.25mcu_y+2]
   battery_area:
     - what: rectangle
       where: [mcu]
-      size: [1.5mcu_x+2, batt_y+11]
-      adjust.shift: [0,-.5mcu_y-.5batt_y-5]
+      size: [1.5mcu_x+5, batt_y+11] 
+      adjust.shift: [-2, -.5mcu_y-.5batt_y-5]
       corner: px
   screw_holes:
     - what: circle
@@ -207,83 +202,61 @@ outlines:
     - what: outline
       name: mounting_holes
       expand: 1
-  keyarea: #starting bottom left
+  keywell:
+    - what: rectangle 
+      where: [mx_key]
+      size: [kpx, kpy] 
+      corner: 2
+      fillet: 4
+      bound: true
+  thumbs_patch:
     - what: polygon
       operation: stack
       fillet: 2
       points:
-        - ref:  matrix_outer_bottom
-          shift: [-0.5kpx, -0.5kpy]
-        - ref:  matrix_pinky_bottom
-          shift: [0kpx, -0.5kpy]
-        - ref:  matrix_pinky_bottom
-          shift: [0.5kpx, -0.5kpy]
-        - ref:  matrix_ring_bottom
-          shift: [0kpx, -0.6kpy]
-        - ref:  matrix_index_bottom
-          shift: [-0.5kpx, -0.6kpy]
         - ref:  thumbs_outer_thumbrow
           shift: [-0.5kpx, -0.5kpy]
-        - ref:  thumbs_outer_thumbrow
-          shift: [0kpx, -0.5kpy]
         - ref:  thumbs_middle_thumbrow
-          shift: [0kpx, -0.5kpy]
+          shift: [-0.5kpx, -0.5kpy]
         - ref:  thumbs_inner_thumbrow
-          shift: [0.5kpx, -0.5kpy]
+          shift: [-0.5kpx, -0.5kpy]
         - ref:  thumbs_inner_thumbrow
-          shift: [0.5kpx, 0.5kpy]
+          shift: [0kpx, 0kpy]          
         - ref:  thumbs_inner_thumbrow
           shift: [-0.5kpx, 0.5kpy]
         - ref:  thumbs_middle_thumbrow
-          shift: [0kpx, 0.5kpy]
-        - ref:  matrix_inner_bottom
-          shift: [0.6kpx, 0kpy]
-        - ref:  matrix_inner_num
-          shift: [0.6kpx, 0.5kpy]
-        - ref:  matrix_index_num
-          shift: [0.25kpx, 0.5kpy]
-        - ref:  matrix_index_num
-          shift: [-0.25kpx, 0.5kpy]
-        - ref:  matrix_middle_num
-          shift: [0.5kpx, 0.5kpy]
-        - ref:  matrix_middle_num
-          shift: [-0.5kpx, 0.5kpy]
-        - ref:  matrix_ring_num
-          shift: [0.25kpx, 0.5kpy]
-        - ref:  matrix_ring_num
-          shift: [-0.5kpx, 0.5kpy]          
-        - ref:  matrix_pinky_num
-          shift: [0.25kpx, 0.5kpy]
-        - ref:  matrix_pinky_num
-          shift: [-0.5kpx, 0.5kpy]
-        - ref:  matrix_outer_num
-          shift: [-0.5kpx, 0.5kpy]
-  keywell:
-    - "keyarea"
+          shift: [0.5kpx, 0.6kpy]
+        - ref:  thumbs_outer_thumbrow
+          shift: [0.5kpx, 0.85kpy]          
+        - ref:  thumbs_outer_thumbrow
+          shift: [-0.5kpx, 0.75kpy]          
   base_outline:
     - keywell
+    - name: thumbs_patch
+      operation: add
+      joints: beveled
+      fillet: 4
+      bound: true
     - controller_area
   bottom_outline:
     - base_outline
-    - -screw_holes
-    - battery_area
+    - name: battery_area
+      operation: add
+      joints: beveled
+      fillet: 2
   outer_area:
     - what: outline
       name: bottom_outline
-      expand: case_d+.5
+      expand: case_d+1
       joints: beveled
   plate:
-    - "keywell"
+    - keywell
+    - thumbs_patch
     - "-switches"
-    - "-screw_holes"     
+    - "-screw_holes"
   pcb:
-    - "base_outline"
+    - base_outline
     - "-mounting_holes"         
-  combo:
-    - keyarea
-    - -keycaps
-    - controller_area
-    - screw_holes
   switches_screws: #For verification
     - base_outline
     - -switches
@@ -361,9 +334,8 @@ pcbs:
           P9: P106
       reset_switch:
         what: ceoloide/reset_switch_smd_side
-        where:
-          ref:
-            - reset_button
+        where: [reset_btn]
+        adjust:
           shift: [0, 0]
           rotate: 270
         params:
@@ -377,9 +349,8 @@ pcbs:
           side: F
           switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/SW_SPDT_PCM12.step'
           switch_3dmodel_xyz_rotation: [0,0,-90]
-        where:
-          ref:
-            - power_button
+        where: [power_btn]
+        adjust:
           shift: [0, 0]
           rotate: 0
       batt_connector:
@@ -389,9 +360,8 @@ pcbs:
           battery_connector_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
           battery_connector_3dmodel_xyz_rotation: [0,0,0]
           battery_connector_3dmodel_xyz_offset: [-1, 0, 0]
-        where:
-          ref:
-            - controller
+        where: [mcu]
+        adjust:
           shift: [.5kx-3, -.5mcu_y-5]
           rotate: -90
 cases:
@@ -424,8 +394,9 @@ cases:
       rotate: [0,90,0]
   _power_cutout:
     - name: power_access
-      extrude: usb_access_d-1
-      shift: [0, 0, case_d+.5pcb_d+bottom_pcb_gap]     
+      extrude: case_d+2
+      shift: [0, 0, case_d+2pcb_d+bottom_pcb_gap]     
+      rotate: [0,90,0]
   _battery_cover:
     - name: battery_area
       extrude: pcb_d
