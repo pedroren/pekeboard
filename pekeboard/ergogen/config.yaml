@@ -106,7 +106,7 @@ points:
       key.tags: [mount]
       anchor:
         - ref: matrix_ring_top
-          shift: [-0.5 kx, 0.5 ky]
+          shift: [-0.5kx +1, 0.5 ky]
     mount_bottom_left:
       key.tags: [mount]
       anchor:
@@ -121,7 +121,7 @@ points:
       key.tags: [mount]
       anchor:
         - ref: matrix_index_bottom
-          shift: [-0.5 kx, 0ky]
+          shift: [.3kx, -.6ky]
     mount_thumb:
       key.tags: [mount]
       anchor:
@@ -143,6 +143,11 @@ points:
       anchor: 
         - ref: controller
           shift: [.5mcu_x+3, -.75mcu_y+3]          
+    mount_battery:          
+      key.tags: [mount]
+      anchor:
+        - ref: power_button
+          shift: [-2, -10]
 outlines:
   raw:
     - what: rectangle
@@ -244,6 +249,7 @@ outlines:
       operation: add
       joints: beveled
       fillet: 2
+    - -screw_holes
   outer_area:
     - what: outline
       name: bottom_outline
@@ -406,6 +412,7 @@ cases:
   switch_plate:
     - _switch_plate      
     - _battery_cover
+    - -_holes
   _bottom:
     - name: outer_area
       extrude: pcb_d
