@@ -1,6 +1,6 @@
 meta:
   name: pepekey
-  version: 0.0.0
+  version: 0.1.0
   engine: 4.1.0
   author: pedroren
 units:
@@ -300,7 +300,7 @@ pcbs:
           - /thumbs_.*/
         params:
           include_keycap: true
-          reversible: false
+          reversible: true
           hotswap: true
           from: "{{column_net}}"
           to: "{{colrow}}"
@@ -319,7 +319,8 @@ pcbs:
         where: mcu
         params:
           #side: F
-          reversible: false
+          reversible: true
+          show_via_labels: false
           P21: P031
           P20: P029
           P19: P002
@@ -345,6 +346,7 @@ pcbs:
           shift: [0, 0]
           rotate: 270
         params:
+          reversible: true          
           from: GND
           to: RST
           reset_switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/Panasonic_EVQPUJ_EVQPUA.step'
@@ -352,6 +354,7 @@ pcbs:
       power_switch:
         what: ceoloide/power_switch_smd_side
         params:
+          reversible: true
           side: F
           switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/SW_SPDT_PCM12.step'
           switch_3dmodel_xyz_rotation: [0,0,-90]
@@ -362,6 +365,7 @@ pcbs:
       batt_connector:
         what: ceoloide/battery_connector_jst_ph_2
         params:
+          reversible: true
           side: F
           battery_connector_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
           battery_connector_3dmodel_xyz_rotation: [0,0,0]
