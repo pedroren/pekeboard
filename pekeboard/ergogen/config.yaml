@@ -294,10 +294,10 @@ pcbs:
       main:
         outline: pcb
     footprints:
-      gnd_fillzone:
-        what: ceoloide/utility_filled_zone
-        where:
-          ref.aggregate.parts: [matrix_outer_top]
+      # gnd_fillzone:
+      #   what: ceoloide/utility_filled_zone
+      #   where:
+      #     ref.aggregate.parts: [matrix_outer_top]
       mounting_holes:
         what: ceoloide/mounting_hole_npth
         where: [mount]   
@@ -319,6 +319,8 @@ pcbs:
           - /thumbs_.*/
         adjust.shift: [0, -5]
         params:
+          reversible: true
+          side: B
           from: "{{colrow}}"
           to: "{{row_net}}"
           diode_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/D_SOD-123.step'
@@ -329,6 +331,24 @@ pcbs:
           #side: F
           reversible: true
           show_via_labels: false
+          P21_label: "031"
+          P20_label: "029"
+          P19_label: "002"
+          P18_label: "115"
+          P15_label: "113"
+          P14_label: "111"
+          P16_label: "010"
+          P10_label: "009"
+          P1_label: "006"
+          P0_label: "008"
+          P2_label: "017"
+          P3_label: "020"
+          P4_label: "022"
+          P5_label: "024"
+          P6_label: "100"
+          P7_label: "011"
+          P8_label: "104"
+          P9_label: "106"
           P21: P031
           P20: P029
           P19: P002
