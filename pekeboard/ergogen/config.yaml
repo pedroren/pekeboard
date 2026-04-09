@@ -144,16 +144,24 @@ points:
         - ref: controller
           shift: [.5mcu_x+3, -.75mcu_y+3]          
     mount_battery:          
-      key.tags: [mount]
+      key.tags: [mount_case]
       anchor:
         - ref: power_button
           shift: [-2, -10]
 outlines:
   raw:
     - what: rectangle
-      where: true
+      where: [mx_key]
       size: [kx, ky]
       corner: px
+    - what: rectangle
+      where: [mcu]
+      size: [mcu_x, mcu_y]
+      corner: px        
+    - what: rectangle
+      where: [-mx_key,-mcu]
+      size: [kx/2, ky/2]
+      corner: px      
   keycaps:
     - what: rectangle 
       where: [mx_key]
@@ -198,11 +206,11 @@ outlines:
   screw_holes:
     - what: circle
       radius: screw_size    
-      where: [mount]
+      where: [mount, mount_case]
   mounting_holes:
     - what: circle
       radius: standoff_size    
-      where: [mount]
+      where: [mount, mount_case]
   pcb_support:
     - what: outline
       name: mounting_holes
