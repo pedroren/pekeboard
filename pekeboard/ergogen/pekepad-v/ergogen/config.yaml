@@ -112,7 +112,7 @@ points:
         ref.aggregate.parts: [          
           matrix_right-inner_top ,
           matrix_left-inner_top]
-        shift: [0,1ky]
+        shift: [0,1ky+2]
 outlines:
   keys_socket:
     - what: rectangle
@@ -141,10 +141,10 @@ outlines:
   controller_area:
     - what: rectangle
       where: [mcu]        
-      size: [1.5mcu_x, 1.5mcu_y]
+      size: [1.5mcu_x-6, 1.5mcu_y-3]
       corner: px      
       adjust:
-        shift: [0, 0]      
+        shift: [2, 0]      
         rotate: -90
   encoders:
     - what: rectangle
@@ -184,6 +184,137 @@ outlines:
       bound: true
     - controller_area      
     - -screw_holes
+  pcb:
+    - base_outline
+    - -mounting_holes  
   preview:    
     - base_outline
     - -keycaps
+pcbs:    
+  pekepadv:
+    template: kicad8
+    outlines:
+      main:
+        outline: pcb
+    footprints:
+      gnd_fillzone:
+        what: ceoloide/utility_filled_zone
+        where:
+          ref.aggregate.parts: [matrix_left-outer_top]
+      mx_hotswap:
+        what: ceoloide/switch_mx
+        where: [mx_key]
+        params:
+          include_keycap: true
+          reversible: false
+          hotswap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+      diode:
+        what: ceoloide/diode_tht_sod123
+        where: [mx_key]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+          diode_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/D_SOD-123.step'
+        adjust:
+          shift: [0, -5]
+          rotate: 180
+      diode_enc:
+        what: ceoloide/diode_tht_sod123
+        where: [encoder]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+          diode_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/D_SOD-123.step'
+          diode_3dmodel_xyz_rotation: [0,0,0]
+        adjust:
+          shift: [0, 4]
+          rotate: 180
+      mcu:
+        what: ceoloide/mcu_nice_nano
+        where: [mcu]
+          #ref.aggregate.parts: [matrix_inner_top, mirror_matrix_inner_top]
+        adjust: 
+          #shift: [0, -.25k]
+          rotate: 90
+        params:
+          reversible: false
+          P21: P031
+          P20: P029
+          P19: P002
+          P18: P115
+          P15: P113
+          P14: P111
+          P16: P010
+          P10: P009
+          P1: P006
+          P0: P008
+          P2: P017
+          P3: P020
+          P4: P022
+          P5: P024
+          P6: P100
+          P7: P011
+          P8: P104
+          P9: P106
+      encoders:
+        what: ceoloide/rotary_encoder_ec11_ec12
+        where: [encoder]
+        params:
+          A: "{{pin_a}}"
+          C: "{{pin_c}}"
+          S1: "{{colrow}}"
+          S2: "{{column_net}}"
+          mirror.S1: "{{column_net}}"
+          mirror.S2: "{{colrow}}"
+          include_plate_hole_marking: true
+          include_plated_mounting_holes: false
+        adjust:
+          rotate: 0
+      # reset_button:
+      #   what: ceoloide/reset_switch_smd_side
+      #   params:
+      #     side: B 
+      #     reset_switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/Panasonic_EVQPUJ_EVQPUA.step'
+      #     reset_switch_3dmodel_xyz_rotation: [0,0,0]
+      #   where:
+      #     ref.aggregate.parts: [matrix_inner_top]
+      #     shift: [.7k,.5k+1]
+      #     rotate: 0
+      # power_switch:
+      #   what: ceoloide/power_switch_smd_side
+      #   params:
+      #     side: B
+      #     switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/SW_SPDT_PCM12.step'
+      #     switch_3dmodel_xyz_rotation: [0,0,90]
+      #   where:
+      #     ref.aggregate.parts: [mirror_matrix_inner_top]
+      #     shift: [-.7k,.5k+1]
+      #     rotate: 90
+      # batt_connector:
+      #   what: ceoloide/battery_connector_jst_ph_2
+      #   params:
+      #     side: B
+      #     battery_connector_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
+      #     battery_connector_3dmodel_xyz_rotation: [0,0,180]
+      #     battery_connector_3dmodel_xyz_offset: [1, 0, 0]
+      #   where:
+      #     ref.aggregate.parts: [mirror_matrix_inner_top]
+      #     shift: [-0.7k, 3]
+      #     rotate: 0
+      mounting_holes:
+          what: ceoloide/mounting_hole_npth
+          where: [mount]
+      oled:
+        what: ceoloide/display_nice_view
+        params:
+          reversible: false
+          side: "F"
+          MOSI: P011
+          SCK: P010
+          CS: P006
+        where:
+          ref.aggregate.parts: [controller]
+          shift: [2,0]
+          rotate: 90
