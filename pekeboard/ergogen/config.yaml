@@ -37,7 +37,7 @@ points:
         shift: [100, -120] #kicad
       key:
         padding: ky+p
-        spread: ky+p
+        spread: kx+p
         tags: mx_key
       columns:
         outer:
@@ -459,11 +459,11 @@ cases:
     - what: case
       name: _standoffs
       operation: subtract
-  _wall:
+  _precase:
     - _outer_block
     - -_inner_block
   case:
-    - _wall
+    - _precase
     - _bottom
     - _pcb_support
     - _standoffs
@@ -472,19 +472,24 @@ cases:
     - -_reset_cutout
     - -_power_cutout
   sandwich_case:
-    - _bottom
+    - name: pcb
+      extrude: pcb_d
+      operation: add
+    - name: battery_area
+      extrude: pcb_d 
+      operation: add
     - _pcb_support
     - _standoffs
     - -_holes
   case_plate_preview: # Assembly compatibility
     - case
-    - what: case
-      name: switch_plate
+    - switch_plate
   case_pcb_preview: # Assembly compatibility
     - case
-    - what: case
-      name: _pcb
+    - _pcb
   pcb_plate_preview: # Assembly compatibility
     - switch_plate
-    - what: case
-      name: _pcb          
+    - _pcb
+  sw_case_plate_preview: # Assembly compatibility
+    - sandwich_case
+    - switch_plate
