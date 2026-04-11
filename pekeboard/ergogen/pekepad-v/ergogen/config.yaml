@@ -1,0 +1,189 @@
+meta:
+  name: pepepad-v
+  version: 0.0.1
+  engine: 4.1.0
+  author: pedroren
+units:
+  kx: u
+  ky: u
+  p: 0
+  # padding for outer keys
+  px: 2
+  kpx: kx+px
+  py: 2
+  kpy: ky+py
+  # components size
+  mcu_y: 34.1
+  mcu_x: 18.3
+  mcu_d: 3.3+12 # mcu+sockets
+  enc_x: 11.7
+  enc_y: 12
+  enc_d: 11.5
+  batt_x: 18
+  batt_y: 32
+  batt_d: 6.5 
+  # Defaults to M2 Screws
+  screw_size: 1.5
+  standoff_size: 2.5
+  # Case
+  case_d: 1.5
+  pcb_d: 1.6
+  plate_pcb_gap: 3
+  bottom_pcb_gap: 3
+  usb_access_x: 13
+  usb_access_d: 6
+  case_y: case_d+bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d
+points:
+  zones:
+    matrix:
+      anchor:
+        shift: [100, -120] #kicad
+      key:
+        padding: ky+p
+        spread: kx+p
+        tags: mx_key
+      columns:
+        left-outer:
+        left-inner:
+        right-inner:
+        right-outer:
+      rows:
+        bottom:
+        middle:
+        top:
+    arrow_cluster:
+      key:
+        padding: ky+p
+        spread: kx+p
+        tags: mx_key
+      anchor:
+        ref: matrix_left-outer_bottom
+        shift: [.5kx, -2.5ky]
+      columns:
+        left:
+          rows.top.skip: true
+        middle:
+        right:
+          rows.top.skip: true
+      rows:
+        bottom:            
+        top:
+    encoders:
+      key.tags: [encoder]
+      anchor:
+        ref: matrix_left-outer_bottom
+        shift: [0, -1.25ky]
+      columns:
+        left:
+        right:
+          key.shift: [2kx, 0]
+      rows:
+        enc-row:
+    mount1:
+      key.tags: [mount]
+      anchor:
+        ref.aggregate.parts: [
+          matrix_left-outer_top,  
+          matrix_left-inner_top ,
+          matrix_left-inner_middle,
+          matrix_left-outer_middle]
+    mount2:
+      key.tags: [mount]
+      anchor:
+        ref.aggregate.parts: [
+          matrix_right-outer_top,  
+          matrix_right-inner_top ,
+          matrix_right-inner_middle,
+          matrix_right-outer_middle]
+        shift: [0,0]
+    mount3:
+      key.tags: [mount]
+      anchor:
+        ref: encoders_left_enc-row
+        shift: [.5kx, -.5ky]
+    mount4:
+      key.tags: [mount]
+      anchor:
+        ref: encoders_right_enc-row
+        shift: [-.5kx, -.5ky]        
+    controller:
+      key.tags: [mcu]
+      anchor:        
+        ref.aggregate.parts: [          
+          matrix_right-inner_top ,
+          matrix_left-inner_top]
+        shift: [0,1ky]
+outlines:
+  keys_socket:
+    - what: rectangle
+      where: [mx_key]
+      size: [14, 14]
+  keycaps:
+    - what: rectangle 
+      where: [mx_key]
+      size: [kx, ky] 
+      corner: 1
+  switches:
+    - what: rectangle
+      where: [mx_key]
+      size: 14
+  keywell:
+    - what: rectangle 
+      where: [mx_key, encoder]
+      size: [kpx, kpy] 
+      corner: 2
+      fillet: 4
+      bound: true 
+  controller:
+    - what: rectangle
+      where: [mcu]
+      size: [mcu_x, mcu_y]           
+  controller_area:
+    - what: rectangle
+      where: [mcu]        
+      size: [1.5mcu_x, 1.5mcu_y]
+      corner: px      
+      adjust:
+        shift: [0, 0]      
+        rotate: -90
+  encoders:
+    - what: rectangle
+      where: [encoder]
+      size: [enc_x, enc_y]                   
+  arrows_patch:
+    - what: polygon    
+      operation: stack
+      fillet: 2
+      points:
+          - ref: matrix_left-outer_bottom
+            shift: [-.5kx, 0]      
+          - ref: encoders_left_enc-row
+            shift: [-.5kx, 0]        
+          - ref: arrow_cluster_left_bottom
+            shift: [-.5kx, 0]          
+          - ref: arrow_cluster_right_bottom
+            shift: [.5kx, 0]            
+          - ref: encoders_right_enc-row
+            shift: [.5kx, 0]      
+          - ref: matrix_right-outer_bottom
+            shift: [.5kx, 0]                    
+  screw_holes:
+    - what: circle
+      radius: screw_size    
+      where: [mount]
+  mounting_holes:
+    - what: circle
+      radius: standoff_size    
+      where: [mount]
+  base_outline:
+    - keywell
+    - name: arrows_patch
+      operation: add
+      joints: beveled
+      fillet: 4
+      bound: true
+    - controller_area      
+    - -screw_holes
+  preview:    
+    - base_outline
+    - -keycaps
