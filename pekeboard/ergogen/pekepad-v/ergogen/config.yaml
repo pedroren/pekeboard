@@ -44,13 +44,20 @@ points:
         tags: mx_key
       columns:
         left-outer:
+          key.column_net: P008
         left-inner:
+          key.column_net: P022
         right-inner:
+          key.column_net: P024
         right-outer:
+          key.column_net: P100
       rows:
         bottom:
+          row_net: P104
         middle:
+          row_net: P106
         top:
+          row_net: P031
     arrow_cluster:
       key:
         padding: ky+p
@@ -61,13 +68,18 @@ points:
         shift: [.5kx, -2.5ky]
       columns:
         left:
+          key.column_net: P008
           rows.top.skip: true
         middle:
+          key.column_net: P022
         right:
           rows.top.skip: true
+          key.column_net: P024
       rows:
-        bottom:            
+        bottom:        
+          row_net: P029    
         top:
+          row_net: P002
     encoders:
       key.tags: [encoder]
       anchor:
@@ -75,10 +87,19 @@ points:
         shift: [0, -1.25ky]
       columns:
         left:
+          key:
+            pin_a: P115
+            pin_c: P113
+            column_net: P008
         right:
-          key.shift: [2kx, 0]
+          key:
+            shift: [2kx, 0]
+            pin_a: P111
+            pin_c: P009
+            column_net: P100
       rows:
         enc-row:
+          row_net: P029
     mount1:
       key.tags: [mount]
       anchor:
@@ -141,11 +162,11 @@ outlines:
   controller_area:
     - what: rectangle
       where: [mcu]        
-      size: [1.5mcu_x-6, 1.5mcu_y-3]
+      size: [1.5mcu_x-5, 1.5mcu_y-6]
       corner: px      
       adjust:
-        shift: [2, 0]      
-        rotate: -90
+        shift: [5, 0]      
+        rotate: 90
   encoders:
     - what: rectangle
       where: [encoder]
@@ -316,5 +337,5 @@ pcbs:
           CS: P006
         where:
           ref.aggregate.parts: [controller]
-          shift: [2,0]
+          shift: [3,0]
           rotate: 90
