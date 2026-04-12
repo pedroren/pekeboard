@@ -7,3 +7,6 @@
 [submodule "zmk-firmware"]
 	path = zmk-firmware
 	url = git@github.com:pedroren/pekeboard-zmk.git
+[submodule "pekepad-v/ergogen/footprints/ceoloide"]
+	path = pekepad-v/ergogen/footprints/ceoloide
+	url = https://github.com/ceoloide/ergogen-footprints.git
