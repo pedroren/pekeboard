@@ -133,7 +133,17 @@ points:
         ref.aggregate.parts: [          
           matrix_right-inner_top ,
           matrix_left-inner_top]
-        shift: [0,1ky+2]
+        shift: [-9,1ky+2]
+    reset_button:
+      key.tags: [reset_btn]          
+      anchor: 
+        - ref: controller
+          shift: [.75mcu_y+8, 5]
+    power_button:
+      key.tags: [power_btn]          
+      anchor: 
+        - ref: controller
+          shift: [.75mcu_y+8, -5]                  
 outlines:
   keys_socket:
     - what: rectangle
@@ -162,15 +172,15 @@ outlines:
   controller_area:
     - what: rectangle
       where: [mcu]        
-      size: [1.5mcu_x-5, 1.5mcu_y-6]
+      size: [1.5mcu_x-5, 1.5mcu_y+2]
       corner: px      
       adjust:
-        shift: [5, 0]      
+        shift: [10, 0]      
         rotate: 90
   encoders:
     - what: rectangle
       where: [encoder]
-      size: [enc_x, enc_y]                   
+      size: [enc_x+.5, enc_y+.5]                   
   arrows_patch:
     - what: polygon    
       operation: stack
@@ -196,6 +206,10 @@ outlines:
     - what: circle
       radius: standoff_size    
       where: [mount]
+  pcb_support:
+    - what: outline
+      name: mounting_holes
+      expand: 1
   base_outline:
     - keywell
     - name: arrows_patch
@@ -205,9 +219,19 @@ outlines:
       bound: true
     - controller_area      
     - -screw_holes
+  outer_outline:  
+    - what: outline
+      name: base_outline
+      expand: case_d+1
+      joints: beveled
+      fillet: 2
   pcb:
     - base_outline
     - -mounting_holes  
+  switch_plate:
+    - base_outline   
+    - -encoders
+    - -switches
   preview:    
     - base_outline
     - -keycaps
@@ -293,37 +317,37 @@ pcbs:
           include_plated_mounting_holes: false
         adjust:
           rotate: 0
-      # reset_button:
-      #   what: ceoloide/reset_switch_smd_side
-      #   params:
-      #     side: B 
-      #     reset_switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/Panasonic_EVQPUJ_EVQPUA.step'
-      #     reset_switch_3dmodel_xyz_rotation: [0,0,0]
-      #   where:
-      #     ref.aggregate.parts: [matrix_inner_top]
-      #     shift: [.7k,.5k+1]
-      #     rotate: 0
-      # power_switch:
-      #   what: ceoloide/power_switch_smd_side
-      #   params:
-      #     side: B
-      #     switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/SW_SPDT_PCM12.step'
-      #     switch_3dmodel_xyz_rotation: [0,0,90]
-      #   where:
-      #     ref.aggregate.parts: [mirror_matrix_inner_top]
-      #     shift: [-.7k,.5k+1]
-      #     rotate: 90
-      # batt_connector:
-      #   what: ceoloide/battery_connector_jst_ph_2
-      #   params:
-      #     side: B
-      #     battery_connector_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
-      #     battery_connector_3dmodel_xyz_rotation: [0,0,180]
-      #     battery_connector_3dmodel_xyz_offset: [1, 0, 0]
-      #   where:
-      #     ref.aggregate.parts: [mirror_matrix_inner_top]
-      #     shift: [-0.7k, 3]
-      #     rotate: 0
+      reset_button:
+        what: ceoloide/reset_switch_smd_side
+        params:
+          side: B 
+          reset_switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/Panasonic_EVQPUJ_EVQPUA.step'
+          reset_switch_3dmodel_xyz_rotation: [0,0,-180]
+        where: reset_btn
+        adjust:
+          shift: [0,0]
+          rotate: -90
+      power_switch:
+        what: ceoloide/power_switch_smd_side
+        params:
+          side: B
+          switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/SW_SPDT_PCM12.step'
+          switch_3dmodel_xyz_rotation: [0,0,-90]
+        where: power_btn
+        adjust:
+          shift: [0,0]
+          rotate: 0
+      batt_connector:
+        what: ceoloide/battery_connector_jst_ph_2
+        params:
+          side: B
+          battery_connector_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
+          battery_connector_3dmodel_xyz_rotation: [0,0,180]
+          battery_connector_3dmodel_xyz_offset: [1, 0, 0]
+        where: power_btn
+        adjust:        
+          shift: [-7, -4]
+          rotate: -180
       mounting_holes:
           what: ceoloide/mounting_hole_npth
           where: [mount]
@@ -339,3 +363,36 @@ pcbs:
           ref.aggregate.parts: [controller]
           shift: [3,0]
           rotate: 90
+cases:
+  _wall:
+    - name: outer_outline
+      extrude: case_y
+    - name: base_outline
+      extrude: case_y
+      operation: subtract
+  bottom_plate:
+    - name: base_outline
+      extrude: case_d
+  switch_plate:    
+    - name: switch_plate
+      extrude: pcb_d
+  _standoffs:
+    - name: mounting_holes
+      extrude: case_y-pcb_d
+  _pcb_support:
+    - name: pcb_support
+      extrude: pcb_d+bottom_pcb_gap
+  _holes:
+    - name: screw_holes
+      extrude: case_y      
+  case:
+    - _wall
+    - bottom_plate      
+    - _standoffs
+    - _pcb_support
+    - -_holes
+  sandwich_case:    
+    - bottom_plate      
+    - _standoffs
+    - _pcb_support
+    - -_holes
