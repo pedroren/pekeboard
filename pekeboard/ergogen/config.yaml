@@ -73,8 +73,8 @@ points:
           row_net: P115
     thumbs:
       key:
-        padding: 1u
-        spread: u+1u/8
+        padding: ky
+        spread: kx+1
         tags: mx_key
       anchor:
         ref:  matrix_inner_bottom
@@ -126,7 +126,7 @@ points:
       key.tags: [mount]
       anchor:
         - ref: thumbs_inner_thumbrow
-          shift: [-0.6 kx, 0]
+          shift: [-0.6 kx, 3]
     controller:
       key.tags: [mcu]          
       anchor: 
