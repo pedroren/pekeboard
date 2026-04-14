@@ -1,12 +1,12 @@
 [submodule "macropad/ergogen/footprints/ceoloide"]
-	path = macropad/ergogen/footprints/ceoloide
+	path = macropad/footprints/ceoloide
 	url = git@github.com:ceoloide/ergogen-footprints.git
 [submodule "pekeboard/ergogen/footprints/ceoloide"]
-	path = pekeboard/ergogen/footprints/ceoloide
+	path = pekeboard/footprints/ceoloide
 	url = git@github.com:ceoloide/ergogen-footprints.git
 [submodule "zmk-firmware"]
 	path = zmk-firmware
 	url = git@github.com:pedroren/pekeboard-zmk.git
 [submodule "pekepad-v/ergogen/footprints/ceoloide"]
-	path = pekepad-v/ergogen/footprints/ceoloide
+	path = pekepad-v/footprints/ceoloide
 	url = https://github.com/ceoloide/ergogen-footprints.git
