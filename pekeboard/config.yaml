@@ -323,7 +323,7 @@ pcbs:
           side: B
           from: "{{colrow}}"
           to: "{{row_net}}"
-          diode_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/D_SOD-123.step'
+          diode_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/D_SOD-123.step'
       mcu:
         what: ceoloide/mcu_nice_nano
         where: mcu
@@ -377,14 +377,14 @@ pcbs:
           reversible: true          
           from: GND
           to: RST
-          reset_switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/Panasonic_EVQPUJ_EVQPUA.step'
+          reset_switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/Panasonic_EVQPUJ_EVQPUA.step'
           reset_switch_3dmodel_xyz_rotation: [0,0,0]
       power_switch:
         what: ceoloide/power_switch_smd_side
         params:
           reversible: true
           side: F
-          switch_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/SW_SPDT_PCM12.step'
+          switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_SPDT_PCM12.step'
           switch_3dmodel_xyz_rotation: [0,0,-90]
         where: [power_btn]
         adjust:
@@ -395,7 +395,7 @@ pcbs:
         params:
           reversible: true
           side: F
-          battery_connector_3dmodel_filename: '${KIPRJMOD}/../../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
+          battery_connector_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
           battery_connector_3dmodel_xyz_rotation: [0,0,0]
           battery_connector_3dmodel_xyz_offset: [-1, 0, 0]
         where: [mcu]
