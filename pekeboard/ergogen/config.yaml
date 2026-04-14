@@ -26,7 +26,7 @@ units:
   case_d: 1.5
   pcb_d: 1.6
   plate_pcb_gap: 3
-  bottom_pcb_gap: 3
+  bottom_pcb_gap: 2
   usb_access_x: 13
   usb_access_d: 6
   case_y: case_d+bottom_pcb_gap+pcb_d+plate_pcb_gap+pcb_d
@@ -200,8 +200,8 @@ outlines:
   battery_area:
     - what: rectangle
       where: [mcu]
-      size: [1.5mcu_x+5, batt_y+11] 
-      adjust.shift: [-2, -.5mcu_y-.5batt_y-5]
+      size: [1.5mcu_x+5, batt_y+10] 
+      adjust.shift: [-2, -.5mcu_y-.5batt_y-6]
       corner: px
   screw_holes:
     - what: circle
