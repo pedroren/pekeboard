@@ -364,18 +364,6 @@ pcbs:
           shift: [3,0]
           rotate: 90
 cases:
-  _wall:
-    - name: outer_outline
-      extrude: case_y
-    - name: base_outline
-      extrude: case_y
-      operation: subtract
-  bottom_plate:
-    - name: base_outline
-      extrude: case_d
-  switch_plate:    
-    - name: switch_plate
-      extrude: pcb_d
   _standoffs:
     - name: mounting_holes
       extrude: case_y-pcb_d
@@ -385,14 +373,24 @@ cases:
   _holes:
     - name: screw_holes
       extrude: case_y      
-  case:
-    - _wall
-    - bottom_plate      
-    - _standoffs
-    - _pcb_support
-    - -_holes
+  _wall:
+    - name: outer_outline
+      extrude: case_y
+    - name: base_outline
+      extrude: case_y
+      operation: subtract
+    - -_holes      
+  bottom_plate:
+    - name: base_outline
+      extrude: case_d
+  switch_plate:    
+    - name: switch_plate
+      extrude: pcb_d
   sandwich_case:    
     - bottom_plate      
     - _standoffs
     - _pcb_support
     - -_holes
+  case:
+    - _wall
+    - sandwich_case
