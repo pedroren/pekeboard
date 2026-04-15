@@ -210,15 +210,17 @@ outlines:
     - what: outline
       name: mounting_holes
       expand: 1
-  base_outline:
+  plate_outline:
     - keywell
     - name: arrows_patch
       operation: add
       joints: beveled
       fillet: 4
       bound: true
-    - controller_area      
     - -screw_holes
+  base_outline:
+    - plate_outline
+    - controller_area      
   outer_outline:  
     - what: outline
       name: base_outline
@@ -229,7 +231,7 @@ outlines:
     - base_outline
     - -mounting_holes  
   switch_plate:
-    - base_outline   
+    - plate_outline
     - -encoders
     - -switches
   preview:    
