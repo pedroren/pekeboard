@@ -275,6 +275,12 @@ outlines:
     - base_outline
     - -switches
     - -mounting_holes
+  pcb_switches: #For verification
+    - pcb
+    - -switches
+  pcb_keycaps: #For verification
+    - pcb
+    - -keycaps
 pcbs:
   top_plate:
     template: kicad8
