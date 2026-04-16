@@ -1,6 +1,6 @@
 meta:
   name: pepepad-v
-  version: 0.0.1
+  version: 0.0.3
   engine: 4.1.0
   author: pedroren
 units:
@@ -342,10 +342,10 @@ pcbs:
       batt_connector:
         what: ceoloide/battery_connector_jst_ph_2
         params:
-          side: B
+          side: F
           battery_connector_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
-          battery_connector_3dmodel_xyz_rotation: [0,0,180]
-          battery_connector_3dmodel_xyz_offset: [1, 0, 0]
+          battery_connector_3dmodel_xyz_rotation: [0,0,0]
+          battery_connector_3dmodel_xyz_offset: [-1, 0, 0]
         where: power_btn
         adjust:        
           shift: [-7, -4]
