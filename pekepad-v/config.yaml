@@ -99,7 +99,7 @@ points:
             column_net: P100
       rows:
         enc-row:
-          row_net: P029
+          row_net: P002 #P029 pcb error
     mount1:
       key.tags: [mount]
       anchor:
