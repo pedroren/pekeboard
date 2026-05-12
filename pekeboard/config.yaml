@@ -213,7 +213,7 @@ outlines:
       where: [mount, mount_case]
   pcb_support:
     - what: outline
-      name: mounting_holes
+      name: screw_holes
       expand: 1
   keywell:
     - what: rectangle 
@@ -270,7 +270,7 @@ outlines:
     - "-screw_holes"
   pcb:
     - base_outline
-    - "-mounting_holes"         
+    - "-screw_holes"         
   switches_screws: #For verification
     - base_outline
     - -switches
@@ -419,7 +419,7 @@ cases:
         shift: [0, 0, case_y-pcb_d]
   _standoffs:
     - name: mounting_holes
-      extrude: case_y-pcb_d
+      extrude: case_d+bottom_pcb_gap+pcb_d
   _pcb_support:
     - name: pcb_support
       extrude: pcb_d+bottom_pcb_gap
@@ -487,15 +487,26 @@ cases:
     - _pcb_support
     - _standoffs
     - -_holes
+  plate_support:
+    - what: outline
+      name: mounting_holes
+      extrude: plate_pcb_gap
+    - what: outline
+      name: screw_holes
+      extrude: plate_pcb_gap
+      operation: subtract
   case_plate_preview: # Assembly compatibility
     - case
     - switch_plate
   case_pcb_preview: # Assembly compatibility
     - case
-    - _pcb
+    - pcb
   pcb_plate_preview: # Assembly compatibility
     - switch_plate
-    - _pcb
+    - pcb
   sw_case_plate_preview: # Assembly compatibility
     - sandwich_case
     - switch_plate
+  sw_case_pcb_preview: # Assembly compatibility
+    - sandwich_case
+    - pcb

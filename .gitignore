@@ -8,3 +8,7 @@ pekeboard/pcbs/*-backups
 pekepad-v/pcbs/*-backups
 pekepad-v/pcbs/fp-info-cache
 pekepad-v/output/*
+*.ses
+freerouting.log
+*.dsn
+.gitignore
