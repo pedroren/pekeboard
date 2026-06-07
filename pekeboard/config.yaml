@@ -66,7 +66,7 @@ points:
         bottom:
           row_net: P031
         home:
-          row_net: P025
+          row_net: P029
         top:
           row_net: P002
         num:
@@ -137,17 +137,20 @@ points:
       key.tags: [reset_btn]          
       anchor: 
         - ref: controller
-          shift: [.5mcu_x+3, 0]
+          shift: [.5mcu_x+3, 2]
     power_button:
       key.tags: [power_btn]          
       anchor: 
         - ref: controller
           shift: [.5mcu_x+3, -.75mcu_y+3]          
-    mount_battery:          
-      key.tags: [mount_case]
+    case_mount_battery:          
+      key.tags: [case_mount]
       anchor:
         - ref: power_button
           shift: [-2, -10]
+  mirror:  &mirror
+    ref: controller
+    distance: 2kx        
 outlines:
   raw:
     - what: rectangle
@@ -206,11 +209,11 @@ outlines:
   screw_holes:
     - what: circle
       radius: screw_size    
-      where: [mount, mount_case]
+      where: [mount, case_mount]
   mounting_holes:
     - what: circle
       radius: standoff_size    
-      where: [mount, mount_case]
+      where: [mount, case_mount]
   pcb_support:
     - what: outline
       name: screw_holes
@@ -239,13 +242,47 @@ outlines:
           shift: [-0.5kpx, 0.5kpy]
         - ref:  thumbs_middle_thumbrow
           shift: [0.5kpx, 0.6kpy]
+        - ref:  thumbs_middle_thumbrow
+          shift: [0kpx, 0.6kpy]
+        - ref:  matrix_inner_home
+          shift: [.70kpx, 0.6kpy]
         - ref:  thumbs_outer_thumbrow
           shift: [0.5kpx, 0.85kpy]          
         - ref:  thumbs_outer_thumbrow
           shift: [-0.5kpx, 0.75kpy]          
+  thumbs_patch_r:
+    - what: polygon
+      operation: stack
+      fillet: 2
+      points:
+        - ref:  mirror_thumbs_outer_thumbrow
+          shift: [-0.5kpx, -0.5kpy]
+        - ref:  mirror_thumbs_middle_thumbrow
+          shift: [-0.5kpx, -0.5kpy]
+        - ref:  mirror_thumbs_inner_thumbrow
+          shift: [-0.5kpx, -0.5kpy]
+        - ref:  mirror_thumbs_inner_thumbrow
+          shift: [0kpx, 0kpy]          
+        - ref:  mirror_thumbs_inner_thumbrow
+          shift: [-0.5kpx, 0.5kpy]
+        - ref:  mirror_thumbs_middle_thumbrow
+          shift: [0.5kpx, 0.6kpy]
+        - ref: mirror_thumbs_middle_thumbrow
+          shift: [0kpx, 0.6kpy]
+        - ref: mirror_matrix_inner_home
+          shift: [.70kpx, 0.6kpy]
+        - ref:  mirror_thumbs_outer_thumbrow
+          shift: [0.5kpx, 0.85kpy]          
+        - ref:  mirror_thumbs_outer_thumbrow
+          shift: [-0.5kpx, 0.75kpy]                    
   base_outline:
     - keywell
     - name: thumbs_patch
+      operation: add
+      joints: beveled
+      fillet: 4
+      bound: true
+    - name: thumbs_patch_r
       operation: add
       joints: beveled
       fillet: 4
@@ -270,7 +307,27 @@ outlines:
     - "-screw_holes"
   pcb:
     - base_outline
-    - "-screw_holes"         
+    - "-screw_holes"     
+  pcb_left:
+    - what: outline
+      name: pcb
+      operation: add        
+    - what: rectangle  #Remove right side
+      where: mirror_controller            
+      size: [200, 200]        
+      adjust:
+        shift: [-80, 0]
+      operation: subtract
+  pcb_right:
+    - what: outline
+      name: pcb
+    - what: rectangle #Remove left side
+      where: '/^controller/'
+      size: [200, 200]        
+      adjust:
+        shift: [-80, 0]
+      operation: subtract
+
   switches_screws: #For verification
     - base_outline
     - -switches
@@ -294,11 +351,13 @@ pcbs:
       edge:
         outline: bottom_outline
         layer: Edge.Cuts        
-  pepekey:
+  pepekey_l:
     template: kicad8
     outlines:
       main:
-        outline: pcb
+        outline: pcb_left
+        layer: Edge.Cuts
+        asym: source 
     footprints:
       # gnd_fillzone:
       #   what: ceoloide/utility_filled_zone
@@ -306,36 +365,39 @@ pcbs:
       #     ref.aggregate.parts: [matrix_outer_top]
       mounting_holes:
         what: ceoloide/mounting_hole_npth
-        where: [mount]   
+        where:  '/^mount_/'
       mx_hotswap:
         what: ceoloide/switch_mx
-        where:
-          - /matrix_.*/
-          - /thumbs_.*/
+        where: '/^(matrix|thumbs)_/'
+          #- /matrix_.*/
+          #- /thumbs_.*/          
         params:
           include_keycap: true
-          reversible: true
+          reversible: false
           hotswap: true
           from: "{{column_net}}"
           to: "{{colrow}}"
+          switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_Cherry_MX_PCB.stp'
+          switch_3dmodel_xyz_rotation: [0,0,180]
+          switch_3dmodel_xyz_offset: [0, 0, 0]
       diode:
         what: ceoloide/diode_tht_sod123
-        where:
-          - /matrix_.*/
-          - /thumbs_.*/
+        where: '/^(matrix|thumbs)_/'
+          #- /matrix_.*/
+          #- /thumbs_.*/
         adjust.shift: [0, -5]
         params:
-          reversible: true
+          reversible: false
           side: B
           from: "{{colrow}}"
           to: "{{row_net}}"
           diode_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/D_SOD-123.step'
       mcu:
         what: ceoloide/mcu_nice_nano
-        where: mcu
+        where: '/^controller/'#mcu
         params:
           #side: F
-          reversible: true
+          reversible: false
           show_via_labels: false
           P21_label: "031"
           P20_label: "029"
@@ -375,12 +437,12 @@ pcbs:
           P9: P106
       reset_switch:
         what: ceoloide/reset_switch_smd_side
-        where: [reset_btn]
+        where: '/^reset_button/'#[reset_btn]
         adjust:
           shift: [0, 0]
           rotate: 270
         params:
-          reversible: true          
+          reversible: false          
           from: GND
           to: RST
           reset_switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/Panasonic_EVQPUJ_EVQPUA.step'
@@ -388,26 +450,145 @@ pcbs:
       power_switch:
         what: ceoloide/power_switch_smd_side
         params:
-          reversible: true
+          reversible: false
           side: F
           switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_SPDT_PCM12.step'
           switch_3dmodel_xyz_rotation: [0,0,-90]
-        where: [power_btn]
+        where:  '/^power_button/'#[power_btn]
         adjust:
           shift: [0, 0]
           rotate: 0
       batt_connector:
         what: ceoloide/battery_connector_jst_ph_2
         params:
-          reversible: true
+          reversible: false
           side: F
           battery_connector_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
           battery_connector_3dmodel_xyz_rotation: [0,0,0]
           battery_connector_3dmodel_xyz_offset: [-1, 0, 0]
-        where: [mcu]
+        where:  '/^controller/'#[mcu]
         adjust:
-          shift: [.5kx-3, -.5mcu_y-5]
+          shift: [.5kx-3, -.5mcu_y-7]
           rotate: -90
+  pepekey_r:
+    template: kicad8
+    outlines:
+      main:
+        outline: pcb_right
+        layer: Edge.Cuts
+        asym: source 
+    footprints:
+      # gnd_fillzone:
+      #   what: ceoloide/utility_filled_zone
+      #   where:
+      #     ref.aggregate.parts: [matrix_outer_top]
+      mounting_holes:
+        what: ceoloide/mounting_hole_npth
+        where:  '/^mirror_mount_/'
+      mx_hotswap:
+        what: ceoloide/switch_mx
+        where: '/^(mirror_matrix|mirror_thumbs)_/'
+          #- /matrix_.*/
+          #- /thumbs_.*/          
+        params:
+          include_keycap: true
+          reversible: false
+          hotswap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+          switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_Cherry_MX_PCB.stp'
+          switch_3dmodel_xyz_rotation: [0,0,180]
+          switch_3dmodel_xyz_offset: [0, 0, 0]
+      diode:
+        what: ceoloide/diode_tht_sod123
+        where: '/^(mirror_matrix|mirror_thumbs)_/'
+          #- /matrix_.*/
+          #- /thumbs_.*/
+        adjust.shift: [0, -5]
+        params:
+          reversible: false
+          side: B
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+          diode_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/D_SOD-123.step'
+      mcu:
+        what: ceoloide/mcu_nice_nano
+        where: '/^mirror_controller/'#mcu
+        params:
+          #side: F
+          reversible: false
+          show_via_labels: false
+          P21_label: "031"
+          P20_label: "029"
+          P19_label: "002"
+          P18_label: "115"
+          P15_label: "113"
+          P14_label: "111"
+          P16_label: "010"
+          P10_label: "009"
+          P1_label: "006"
+          P0_label: "008"
+          P2_label: "017"
+          P3_label: "020"
+          P4_label: "022"
+          P5_label: "024"
+          P6_label: "100"
+          P7_label: "011"
+          P8_label: "104"
+          P9_label: "106"
+          P21: P031
+          P20: P029
+          P19: P002
+          P18: P115
+          P15: P113
+          P14: P111
+          P16: P010
+          P10: P009
+          P1: P006
+          P0: P008
+          P2: P017
+          P3: P020
+          P4: P022
+          P5: P024
+          P6: P100
+          P7: P011
+          P8: P104
+          P9: P106
+      reset_switch:
+        what: ceoloide/reset_switch_smd_side
+        where: '/^mirror_reset_button/'#[reset_btn]
+        adjust:
+          shift: [0, 0]
+          rotate: 270
+        params:
+          reversible: false          
+          from: GND
+          to: RST
+          reset_switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/Panasonic_EVQPUJ_EVQPUA.step'
+          reset_switch_3dmodel_xyz_rotation: [0,0,0]
+      power_switch:
+        what: ceoloide/power_switch_smd_side
+        params:
+          reversible: false
+          side: F
+          switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_SPDT_PCM12.step'
+          switch_3dmodel_xyz_rotation: [0,0,-90]
+        where:  '/^mirror_power_button/'#[power_btn]
+        adjust:
+          shift: [0, 0]
+          rotate: 180
+      batt_connector:
+        what: ceoloide/battery_connector_jst_ph_2
+        params:
+          reversible: false
+          side: F
+          battery_connector_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
+          battery_connector_3dmodel_xyz_rotation: [0,0,0]
+          battery_connector_3dmodel_xyz_offset: [-1, 0, 0]
+        where:  '/^mirror_controller/'#[mcu]
+        adjust:
+          shift: [.5kx-3, -.5mcu_y-7]
+          rotate: -90        
 cases:
   _pcb:
     - name: pcb
