@@ -206,6 +206,12 @@ outlines:
       size: [1.5mcu_x+5, batt_y+10] 
       adjust.shift: [-2, -.5mcu_y-.5batt_y-6]
       corner: px
+    - what: rectangle  #Remove right side
+      where: mirror_controller            
+      size: [200, 200]        
+      adjust:
+        shift: [-80, 0]
+      operation: subtract    
   screw_holes:
     - what: circle
       radius: screw_size    
@@ -214,16 +220,32 @@ outlines:
     - what: circle
       radius: standoff_size    
       where: [mount, case_mount]
+  mounting_holes_left:
+    - what: circle
+      radius: standoff_size    
+      where: [mount, case_mount]    
+    - what: rectangle  #Remove right side
+      where: mirror_controller            
+      size: [200, 200]        
+      adjust:
+        shift: [-80, 0]
+      operation: subtract  
   pcb_support:
     - what: outline
       name: screw_holes
       expand: 1
+    - what: rectangle  #Remove right side
+      where: mirror_controller            
+      size: [200, 200]        
+      adjust:
+        shift: [-80, 0]
+      operation: subtract    
   keywell:
     - what: rectangle 
       where: [mx_key]
       size: [kpx, kpy] 
       corner: 2
-      fillet: 4
+      fillet: 2
       bound: true
   thumbs_patch:
     - what: polygon
@@ -244,7 +266,7 @@ outlines:
           shift: [0.5kpx, 0.6kpy]
         - ref:  thumbs_middle_thumbrow
           shift: [0kpx, 0.6kpy]
-        - ref:  matrix_inner_home
+        - ref:  matrix_inner_home # Easier routing
           shift: [.70kpx, 0.6kpy]
         - ref:  thumbs_outer_thumbrow
           shift: [0.5kpx, 0.85kpy]          
@@ -269,7 +291,7 @@ outlines:
           shift: [0.5kpx, 0.6kpy]
         - ref: mirror_thumbs_middle_thumbrow
           shift: [0kpx, 0.6kpy]
-        - ref: mirror_matrix_inner_home
+        - ref: mirror_matrix_inner_home # Easier routing
           shift: [.70kpx, 0.6kpy]
         - ref:  mirror_thumbs_outer_thumbrow
           shift: [0.5kpx, 0.85kpy]          
@@ -280,12 +302,12 @@ outlines:
     - name: thumbs_patch
       operation: add
       joints: beveled
-      fillet: 4
+      fillet: 2
       bound: true
     - name: thumbs_patch_r
       operation: add
       joints: beveled
-      fillet: 4
+      fillet: 2
       bound: true
     - controller_area
   bottom_outline:
@@ -295,16 +317,35 @@ outlines:
       joints: beveled
       fillet: 2
     - -screw_holes
+    - what: rectangle  #Remove right side
+      where: mirror_controller            
+      size: [200, 200]        
+      adjust:
+        shift: [-80, 0]
+      operation: subtract
   outer_area:
     - what: outline
       name: bottom_outline
       expand: case_d+1
       joints: beveled
+    - what: rectangle  #Remove right side
+      where: mirror_controller            
+      size: [200, 200]        
+      adjust:
+        shift: [-80, 0]
+      operation: subtract
   plate:
     - keywell
     - thumbs_patch
+    - thumbs_patch_r
     - "-switches"
     - "-screw_holes"
+    - what: rectangle  #Remove right side
+      where: mirror_controller            
+      size: [200, 200]        
+      adjust:
+        shift: [-80, 0]
+      operation: subtract
   pcb:
     - base_outline
     - "-screw_holes"     
@@ -327,15 +368,15 @@ outlines:
       adjust:
         shift: [-80, 0]
       operation: subtract
-
-  switches_screws: #For verification
+  # For verification
+  switches_screws: 
     - base_outline
     - -switches
     - -mounting_holes
-  pcb_switches: #For verification
+  pcb_switches: 
     - pcb
     - -switches
-  pcb_keycaps: #For verification
+  pcb_keycaps: 
     - pcb
     - -keycaps
 pcbs:
@@ -377,9 +418,9 @@ pcbs:
           hotswap: true
           from: "{{column_net}}"
           to: "{{colrow}}"
-          switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_Cherry_MX_PCB.stp'
-          switch_3dmodel_xyz_rotation: [0,0,180]
-          switch_3dmodel_xyz_offset: [0, 0, 0]
+          switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_Hotswap_Kailh_MX.stp'
+          switch_3dmodel_xyz_rotation: [0,180,180]
+          switch_3dmodel_xyz_offset: [0, 0, -1.9]
       diode:
         what: ceoloide/diode_tht_sod123
         where: '/^(matrix|thumbs)_/'
@@ -496,9 +537,9 @@ pcbs:
           hotswap: true
           from: "{{column_net}}"
           to: "{{colrow}}"
-          switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_Cherry_MX_PCB.stp'
-          switch_3dmodel_xyz_rotation: [0,0,180]
-          switch_3dmodel_xyz_offset: [0, 0, 0]
+          switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_Hotswap_Kailh_MX.stp'
+          switch_3dmodel_xyz_rotation: [0,180,180]
+          switch_3dmodel_xyz_offset: [0, 0, -1.9]
       diode:
         what: ceoloide/diode_tht_sod123
         where: '/^(mirror_matrix|mirror_thumbs)_/'
@@ -591,7 +632,7 @@ pcbs:
           rotate: -90        
 cases:
   _pcb:
-    - name: pcb
+    - name: pcb_left
       extrude: pcb_d
       shift: [0,0,case_d+pcb_d+bottom_pcb_gap]
   _switch_plate:
@@ -599,7 +640,7 @@ cases:
         extrude: pcb_d
         shift: [0, 0, case_y-pcb_d]
   _standoffs:
-    - name: mounting_holes
+    - name: mounting_holes_left
       extrude: case_d+bottom_pcb_gap+pcb_d
   _pcb_support:
     - name: pcb_support
@@ -659,7 +700,7 @@ cases:
     - -_reset_cutout
     - -_power_cutout
   sandwich_case:
-    - name: pcb
+    - name: pcb_left
       extrude: pcb_d
       operation: add
     - name: battery_area

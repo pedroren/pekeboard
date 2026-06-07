@@ -348,8 +348,8 @@ pcbs:
           battery_connector_3dmodel_xyz_offset: [-1, 0, 0]
         where: power_btn
         adjust:        
-          shift: [-7, -4]
-          rotate: -180
+          shift: [-7, 10]
+          rotate: 0
       mounting_holes:
           what: ceoloide/mounting_hole_npth
           where: [mount]

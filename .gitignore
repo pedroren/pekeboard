@@ -12,3 +12,4 @@ pekepad-v/output/*
 freerouting.log
 *.dsn
 .gitignore
+*.kicad_pro.lck

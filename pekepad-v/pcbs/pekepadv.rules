@@ -1,0 +1,61 @@
+
+(rules PCB pekepadv.dsn
+  (snap_angle 
+    fortyfive_degree
+  )
+  (rule
+    (width 200.0)
+    (clearance 200.0)
+    (clearance 100.0 (type smd_to_turn_gap))
+    (clearance 50.0 (type smd))
+    (clearance 200.0 (type "kicad_default"))
+    (clearance 500.0 (type "board_edge"))
+  )
+  (padstack "Via[0-1]_600:300_um"
+    (shape
+      (circle F.Cu 600.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 600.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_600:300_um" "Via[0-1]_600:300_um" default
+  )
+  (via 
+    "Via[0-1]_600:300_um-kicad_default" "Via[0-1]_600:300_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_600:300_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_600:300_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    GND P115 P113 "left_enc-row" P008 P011 P010 VCC
+    P006 "BAT_P" P111 P009 "right_enc-row" P100 RAW RST
+    P031 P029 P002 P106 P104 P024 P022 P020
+    P017 "middle_bottom" "left-inner_middle" "right-outer_middle" "left-inner_bottom" "right-outer_top" "right_bottom" "left-outer_middle"
+    "middle_top" "left-outer_bottom" "right-inner_middle" "left-inner_top" "right-inner_bottom" "left-outer_top" "right-inner_top" "left_bottom"
+    "right-outer_bottom"
+    (clearance_class "kicad_default")
+    (via_rule "kicad_default")
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)
