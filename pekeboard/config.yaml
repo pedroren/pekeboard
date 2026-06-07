@@ -84,21 +84,21 @@ points:
           key:
             splay: -10
             origin: [-0.7 u, +0.5 u]
-            column_net: P100
+            column_net: P011
         middle:
           key:
             splay: -10
             #stagger: -1u/6
             origin: [-0.5 u, -0.5 u]
             #rotate: -6
-            column_net: P011
+            column_net: P106
         inner:
           key:
             splay: -10
             #stagger: -1u/4
             #rotate: -6
             origin: [-0.5 u, -0.5 u]
-            column_net: P106
+            column_net: P111
       rows:
         thumbrow:
           row_net: P113
@@ -150,7 +150,7 @@ points:
           shift: [-2, -10]
   mirror:  &mirror
     ref: controller
-    distance: 2kx        
+    distance: 2.5kx        
 outlines:
   raw:
     - what: rectangle
