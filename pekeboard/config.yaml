@@ -10,7 +10,7 @@ units:
   # padding for outer keys
   px: 2
   kpx: kx+px
-  py: 2
+  py: 3
   kpy: ky+py
   # components size
   mcu_y: 34.1
