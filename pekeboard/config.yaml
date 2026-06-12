@@ -1,6 +1,6 @@
 meta:
   name: pepekey
-  version: 0.1.0
+  version: 1.0
   engine: 4.1.0
   author: pedroren
 units:
@@ -511,6 +511,14 @@ pcbs:
         adjust:
           shift: [.5kx-3, -.5mcu_y-7]
           rotate: -90
+      pcb_label:
+        what: ceoloide/utility_text
+        params:
+          text: 'Pekeboard v1.0 by pedroren'    
+        where:  '/^matrix_inner_bottom/'
+        adjust:
+          shift: [1/2kx+2,0]
+          rotate: -90    
   pepekey_r:
     template: kicad8
     outlines:
@@ -630,6 +638,14 @@ pcbs:
         adjust:
           shift: [.5kx-3, -.5mcu_y-7]
           rotate: -90        
+      pcb_label:
+        what: ceoloide/utility_text
+        params:
+          text: 'Pekeboard v1.0 by pedroren'    
+        where:  '/^mirror_matrix_inner_bottom/'
+        adjust:
+          shift: [1/2kx+2,0]
+          rotate: -90
 cases:
   _pcb:
     - name: pcb_left
