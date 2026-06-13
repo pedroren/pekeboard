@@ -1,6 +1,6 @@
 meta:
   name: pepepad-v
-  version: 0.0.3
+  version: 1.0
   engine: 4.1.0
   author: pedroren
 units:
@@ -44,20 +44,20 @@ points:
         tags: mx_key
       columns:
         left-outer:
-          key.column_net: P008
+          key.column_net: P031 #P008
         left-inner:
-          key.column_net: P022
+          key.column_net: P029 #P022
         right-inner:
-          key.column_net: P024
+          key.column_net: P002 #P024
         right-outer:
-          key.column_net: P100
+          key.column_net: P115 #P100
       rows:
         bottom:
-          row_net: P104
+          row_net: P011 #P104
         middle:
-          row_net: P106
+          row_net: P100 #P106
         top:
-          row_net: P031
+          row_net: P024 #P031
     arrow_cluster:
       key:
         padding: ky+p
@@ -68,18 +68,18 @@ points:
         shift: [.5kx, -2.5ky]
       columns:
         left:
-          key.column_net: P008
+          key.column_net: P031 #P008
           rows.top.skip: true
         middle:
-          key.column_net: P022
+          key.column_net: P029 #P022
         right:
           rows.top.skip: true
-          key.column_net: P024
+          key.column_net: P002 #P024
       rows:
         bottom:        
-          row_net: P029    
+          row_net: P009 #P029    
         top:
-          row_net: P002
+          row_net: P104
     encoders:
       key.tags: [encoder]
       anchor:
@@ -88,18 +88,18 @@ points:
       columns:
         left:
           key:
-            pin_a: P115
-            pin_c: P113
-            column_net: P008
+            pin_a: P022 #P115
+            pin_c: P008 #P113
+            column_net: P031 #P008
         right:
           key:
             shift: [2kx, 0]
-            pin_a: P111
-            pin_c: P009
-            column_net: P100
+            pin_a: P110 #P111
+            pin_c: P106
+            column_net: P115 #P100
       rows:
         enc-row:
-          row_net: P002 #P029 pcb error
+          row_net: P104 #P002
     mount1:
       key.tags: [mount]
       anchor:
@@ -133,17 +133,17 @@ points:
         ref.aggregate.parts: [          
           matrix_right-inner_top ,
           matrix_left-inner_top]
-        shift: [-9,1ky+2]
+        shift: [-12,1ky+2]
     reset_button:
       key.tags: [reset_btn]          
       anchor: 
         - ref: controller
-          shift: [.75mcu_y+8, 5]
+          shift: [.75mcu_y+14, 5]
     power_button:
       key.tags: [power_btn]          
       anchor: 
         - ref: controller
-          shift: [.75mcu_y+8, -5]                  
+          shift: [.75mcu_y+14, -5]                  
 outlines:
   keys_socket:
     - what: rectangle
@@ -172,10 +172,10 @@ outlines:
   controller_area:
     - what: rectangle
       where: [mcu]        
-      size: [1.5mcu_x-5, 1.5mcu_y+2]
-      corner: px      
+      size: [1.5mcu_x-3, 1.5mcu_y+9]
+      corner: 2      
       adjust:
-        shift: [10, 0]      
+        shift: [12, -1]      
         rotate: 90
   encoders:
     - what: rectangle
@@ -358,13 +358,21 @@ pcbs:
         params:
           reversible: false
           side: "F"
-          MOSI: P011
-          SCK: P010
+          MOSI: P017
+          SCK: P020
           CS: P006
         where:
           ref.aggregate.parts: [controller]
           shift: [3,0]
           rotate: 90
+      pcb_label:
+        what: ceoloide/utility_text
+        params:
+          text: 'Pekepad-v v1.0 by pedroren'    
+        where:  '/^arrow_cluster_middle_top/'
+        adjust:
+          shift: [0,1/2ky+2]
+          rotate: 0    
 cases:
   _standoffs:
     - name: mounting_holes
