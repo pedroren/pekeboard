@@ -1,0 +1,19 @@
+Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
+D1,,diode_tht_sod123,100.0,-125.0,180.0,bottom
+D10,,diode_tht_sod123,157.0,-125.0,180.0,bottom
+D11,,diode_tht_sod123,157.0,-106.0,180.0,bottom
+D12,,diode_tht_sod123,157.0,-87.0,180.0,bottom
+D13,,diode_tht_sod123,109.5,-172.5,180.0,bottom
+D14,,diode_tht_sod123,128.5,-172.5,180.0,bottom
+D15,,diode_tht_sod123,128.5,-153.5,180.0,bottom
+D16,,diode_tht_sod123,147.5,-172.5,180.0,bottom
+D17,,diode_tht_sod123,100.0,-139.75,180.0,bottom
+D18,,diode_tht_sod123,157.0,-139.75,180.0,bottom
+D2,,diode_tht_sod123,100.0,-106.0,180.0,bottom
+D3,,diode_tht_sod123,100.0,-87.0,180.0,bottom
+D4,,diode_tht_sod123,119.0,-125.0,180.0,bottom
+D5,,diode_tht_sod123,119.0,-106.0,180.0,bottom
+D6,,diode_tht_sod123,119.0,-87.0,180.0,bottom
+D7,,diode_tht_sod123,138.0,-125.0,180.0,bottom
+D8,,diode_tht_sod123,138.0,-106.0,180.0,bottom
+D9,,diode_tht_sod123,138.0,-87.0,180.0,bottom
