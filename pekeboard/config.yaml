@@ -200,11 +200,11 @@ outlines:
       size: [1.5mcu_x+3, 1.5mcu_y-4]
       corner: px
       adjust.shift: [-1,-.25mcu_y+2]
-  battery_area:
+  battery_area: #Batt/Cable cover
     - what: rectangle
       where: [mcu]
-      size: [1.5mcu_x+5, batt_y+10] 
-      adjust.shift: [-2, -.5mcu_y-.5batt_y-6]
+      size: [1.5mcu_x+5, batt_y-1] 
+      adjust.shift: [-2, -.5mcu_y-.5batt_y-17]
       corner: px
     - what: rectangle  #Remove right side
       where: mirror_controller            
@@ -733,6 +733,10 @@ cases:
       name: screw_holes
       extrude: plate_pcb_gap
       operation: subtract
+  top_gasket:
+      - name: plate
+        extrude: plate_pcb_gap
+        shift: [0, 0, 0]    
   case_plate_preview: # Assembly compatibility
     - case
     - switch_plate
