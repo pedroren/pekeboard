@@ -200,6 +200,15 @@ outlines:
       size: [1.5mcu_x+3, 1.5mcu_y-4]
       corner: px
       adjust.shift: [-1,-.25mcu_y+2]
+  controller_cover:
+     - what: outline
+       name: controller_area
+       operation: add
+     - what: rectangle      
+       size: [1.5mcu_x+3, 10]
+       corner: px
+       where: [mcu]        
+       adjust.shift: [-1, -mcu_y]
   battery_area: #Batt/Cable cover
     - what: rectangle
       where: [mcu]
@@ -790,7 +799,7 @@ cases:
       extrude: pcb_d+bottom_pcb_gap
   _holes:
     - name: screw_holes
-      extrude: case_y
+      extrude: case_y+case_y
   _usb_cutout:
     - name: usb_access
       extrude: case_d+2
@@ -864,6 +873,11 @@ cases:
       - name: plate
         extrude: plate_pcb_gap
         shift: [0, 0, 0]    
+  controller_cover:
+      - name: controller_cover
+        extrude: pcb_d
+        shift: [0, 0, case_y]    
+      - -_holes
   case_plate_preview: # Assembly compatibility
     - case
     - switch_plate
@@ -876,6 +890,8 @@ cases:
   sw_case_plate_preview: # Assembly compatibility
     - sandwich_case
     - switch_plate
-  sw_case_pcb_preview: # Assembly compatibility
+    - controller_cover
+sw_case_pcb_preview: # Assembly compatibility
     - sandwich_case
     - pcb
+    
