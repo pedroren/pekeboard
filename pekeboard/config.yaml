@@ -646,6 +646,133 @@ pcbs:
         adjust:
           shift: [1/2kx+2,0]
           rotate: -90
+  pepekey_dual: #reversible version
+    template: kicad8
+    outlines:
+      main:
+        outline: pcb_left
+        layer: Edge.Cuts
+        asym: source 
+    footprints:
+      # gnd_fillzone:
+      #   what: ceoloide/utility_filled_zone
+      #   where:
+      #     ref.aggregate.parts: [matrix_outer_top]
+      mounting_holes:
+        what: ceoloide/mounting_hole_npth
+        where:  '/^mount_/'
+      mx_hotswap:
+        what: ceoloide/switch_mx
+        where: '/^(matrix|thumbs)_/'
+          #- /matrix_.*/
+          #- /thumbs_.*/          
+        params:
+          include_keycap: true
+          reversible: true
+          hotswap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+          switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_Hotswap_Kailh_MX.stp'
+          switch_3dmodel_xyz_rotation: [0,180,180]
+          switch_3dmodel_xyz_offset: [0, 0, -1.9]
+      diode:
+        what: ceoloide/diode_tht_sod123
+        where: '/^(matrix|thumbs)_/'
+          #- /matrix_.*/
+          #- /thumbs_.*/
+        adjust.shift: [0, -5]
+        params:
+          reversible: true
+          side: B
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+          diode_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/D_SOD-123.step'
+      mcu:
+        what: ceoloide/mcu_nice_nano
+        where: '/^controller/'#mcu
+        params:
+          #side: F
+          reversible: true
+          show_via_labels: false
+          P21_label: "031"
+          P20_label: "029"
+          P19_label: "002"
+          P18_label: "115"
+          P15_label: "113"
+          P14_label: "111"
+          P16_label: "010"
+          P10_label: "009"
+          P1_label: "006"
+          P0_label: "008"
+          P2_label: "017"
+          P3_label: "020"
+          P4_label: "022"
+          P5_label: "024"
+          P6_label: "100"
+          P7_label: "011"
+          P8_label: "104"
+          P9_label: "106"
+          P21: P031
+          P20: P029
+          P19: P002
+          P18: P115
+          P15: P113
+          P14: P111
+          P16: P010
+          P10: P009
+          P1: P006
+          P0: P008
+          P2: P017
+          P3: P020
+          P4: P022
+          P5: P024
+          P6: P100
+          P7: P011
+          P8: P104
+          P9: P106
+      reset_switch:
+        what: ceoloide/reset_switch_smd_side
+        where: '/^reset_button/'#[reset_btn]
+        adjust:
+          shift: [0, 0]
+          rotate: 270
+        params:
+          reversible: true          
+          from: GND
+          to: RST
+          reset_switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/Panasonic_EVQPUJ_EVQPUA.step'
+          reset_switch_3dmodel_xyz_rotation: [0,0,0]
+      power_switch:
+        what: ceoloide/power_switch_smd_side
+        params:
+          reversible: true
+          side: F
+          switch_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/SW_SPDT_PCM12.step'
+          switch_3dmodel_xyz_rotation: [0,0,-90]
+        where:  '/^power_button/'#[power_btn]
+        adjust:
+          shift: [0, 0]
+          rotate: 0
+      batt_connector:
+        what: ceoloide/battery_connector_jst_ph_2
+        params:
+          reversible: true
+          side: F
+          battery_connector_3dmodel_filename: '${KIPRJMOD}/../../kicad/3dmodels/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.step'
+          battery_connector_3dmodel_xyz_rotation: [0,0,0]
+          battery_connector_3dmodel_xyz_offset: [-1, 0, 0]
+        where:  '/^controller/'#[mcu]
+        adjust:
+          shift: [.5kx-3, -.5mcu_y-7]
+          rotate: -90
+      pcb_label:
+        what: ceoloide/utility_text
+        params:
+          text: 'Pekeboard v1.0 by pedroren'    
+        where:  '/^matrix_inner_bottom/'
+        adjust:
+          shift: [1/2kx+2,0]
+          rotate: -90    
 cases:
   _pcb:
     - name: pcb_left
