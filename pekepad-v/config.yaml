@@ -396,6 +396,9 @@ cases:
   switch_plate:    
     - name: switch_plate
       extrude: pcb_d
+  top_gasket:    
+    - name: switch_plate
+      extrude: plate_pcb_gap    
   sandwich_case:    
     - bottom_plate      
     - _standoffs
