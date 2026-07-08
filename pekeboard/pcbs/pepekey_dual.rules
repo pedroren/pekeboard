@@ -1,0 +1,65 @@
+
+(rules PCB pepekey_dual.dsn
+  (snap_angle 
+    fortyfive_degree
+  )
+  (rule
+    (width 200.0)
+    (clearance 200.0)
+    (clearance 100.0 (type smd_to_turn_gap))
+    (clearance 50.0 (type smd))
+    (clearance 200.0 (type "kicad_default"))
+    (clearance 500.0 (type "board_edge"))
+  )
+  (padstack "Via[0-1]_600:300_um"
+    (shape
+      (circle F.Cu 600.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 600.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_600:300_um" "Via[0-1]_600:300_um" default
+  )
+  (via 
+    "Via[0-1]_600:300_um-kicad_default" "Via[0-1]_600:300_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_600:300_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_600:300_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    P008 "outer_bottom" GND "outer_home" "outer_top" "outer_num" P022 "pinky_bottom"
+    "pinky_home" "pinky_top" "pinky_num" P024 "ring_bottom" "ring_home" "ring_top" "ring_num"
+    P100 "middle_bottom" "middle_home" "middle_top" "middle_num" P011 "index_bottom" "index_home"
+    "index_top" "index_num" P106 "inner_bottom" "inner_home" "inner_top" "inner_num" "outer_thumbrow"
+    "middle_thumbrow" P111 "inner_thumbrow" P031 P029 P002 P115 P113
+    RAW RST VCC P010 P009 P006 P017 P020
+    P104 "MCU1_24" "MCU1_1" "MCU1_23" "MCU1_2" "MCU1_22" "MCU1_3" "MCU1_21"
+    "MCU1_4" "MCU1_20" "MCU1_5" "MCU1_19" "MCU1_6" "MCU1_18" "MCU1_7" "MCU1_17"
+    "MCU1_8" "MCU1_16" "MCU1_9" "MCU1_15" "MCU1_10" "MCU1_14" "MCU1_11" "MCU1_13"
+    "MCU1_12" "BAT_P" "JST1_1" "JST1_2"
+    (clearance_class "kicad_default")
+    (via_rule "kicad_default")
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)
